@@ -41,3 +41,8 @@ TCP/IP协议栈是重点，一般面试官会问的比如：说一下TCP为什�
 
 ## [:memo:**开发辅助工具**](https://github.com/guaguaupup/cplusplus_interview_summary/blob/main/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93%E2%80%94%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7.md)</br>
 开发的辅助工具，也会被问到！
+
+<hr>
+
+# :bookmark_tabs:书籍笔记总结
+> 将看过的部分书的重要的知识点做了总结， 定时翻看可以对整本书的体系结构有一个比较清晰的认识。
