@@ -3,7 +3,7 @@
 [![Linux](https://travis-ci.org/Microsoft/MMdnn.svg?branch=master)](https://travis-ci.org/Microsoft/MMdnn)
 ![Language](https://img.shields.io/badge/language-c++-brightgreen)
 
-# :notebook:C++后台开发方向的面经总结:black_nib: 
+# 写在前面
 看过市面上很多面经的总结，不论是github上上千star的或者是公众号上的，给我的感觉就是既没有深度也没有广度，仅仅是解释一个概念。如果面试官细问下去，而你仅仅是了解这个概念，很容易就gg了。所以我希望自己总结的这些，当大家看到后都能够发散和思考，找到自己的技术方向和知识框架体系。
 这样，等面试官问你的时候，一个知识点你能给他说上半个小时！这offer岂不是拿到手软？
 
@@ -11,6 +11,7 @@
 
 <hr>
 
+# :notebook:C++后台开发方向的面经总结:black_nib: 
 ## [:memo:**C++**](https://github.com/guaguaupup/cplusplus_interview_summary/blob/main/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93%E2%80%94C%2B%2B.md)</br>
 主要包含三部分内容。第一部分是c++和部分c相关的语言特性，针对这些特性和易错点都做了整理和发散。第二部分是STL知识，一些会被问到的问题的总结，源码的分析等等。第三部分是c++轮子部分，例如线程池、内存池这种写一个工具demo的问题也会被问到。本人2022暑期实习的时候被问到的最多的就是“写一个智能指针类”。
 
