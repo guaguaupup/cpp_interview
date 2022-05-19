@@ -47,5 +47,14 @@ TCP/IP协议栈是重点，一般面试官会问的比如：说一下TCP为什�
 
 # :bookmark_tabs:书籍笔记总结
 > 将看过的部分书的重要的知识点做了总结， 定时翻看可以对整本书的体系结构有一个比较清晰的认识。
-## [:memo:**操作系统**](https://github.com/guaguaupup/cpp_interview/blob/main/%E4%B9%A6%E7%B1%8D%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.md)
+## [:memo:**操作系统**](https://github.com/guaguaupup/cpp_interview/blob/main/%E4%B9%A6%E7%B1%8D%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.md)</br>
+总结自电子工业出版社的现代操作系统
 
+## [:memo:**c++ primer plus**](https://github.com/guaguaupup/cpp_interview/blob/main/%E4%B9%A6%E7%B1%8D%E7%AC%94%E8%AE%B0/c%2B%2B%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83%E5%8F%8A%E8%BF%9B%E9%98%B6.md)</br>
+那一本很厚的白色c++书，我都给翻成黑色的了
+
+## [:memo:**高性能服务器**](https://github.com/guaguaupup/cpp_interview/blob/main/%E4%B9%A6%E7%B1%8D%E7%AC%94%E8%AE%B0/linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8.md)</br>
+游双老师的那一本
+
+## [:memo:**汇编语言**](https://github.com/guaguaupup/cpp_interview/blob/main/%E4%B9%A6%E7%B1%8D%E7%AC%94%E8%AE%B0/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80.md)</br>
+一些简单的汇编概念知识
