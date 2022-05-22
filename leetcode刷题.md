@@ -1,6 +1,6 @@
-[TOC]
 
-<img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210805105705.jpeg" alt="preview" style="zoom:80%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210805105705.jpeg" alt="preview" style="zoom:80%;float:left" />
 
 
 
@@ -31,7 +31,7 @@ int lower_bound(起始地址，结束地址，要查找的数值) 返回的是�
 
 int index = upper_bound(vec.begin(), vec.end(), target) - vec.begin()
 
-功能：函数lower_bound()在first和last中的前闭后开区间进行二分查找，返回大于或等于val的第一个元素位置。如果所有元素都小于val，则返回last的位置，因为是前闭后开因此这个时候的last会越界，要注意。
+功能：函数lower_bound()在first和last中的前闭后开区间进行二分查找，返回大于或等于target的第一个元素位置。如果所有元素都小于target，则返回last的位置，因为是前闭后开因此这个时候的last会越界，要注意。
 
 
 
@@ -41,7 +41,7 @@ int upper_bound(起始地址，结束地址，要查找的数值) 返回的是�
 
 int index = upper_bound(vec.begin(), vec.end(), target) - vec.begin();
 
-功能：函数upper_bound()返回的在前闭后开区间查找的关键字的上界，返回大于val的第一个元素位置。注意：返回查找元素的最后一个可安插位置，也就是“元素值>查找值”的第一个元素的位置。同样，如果val大于数组中全部元素，返回的是last。(注意：数组下标越界)
+功能：函数upper_bound()返回的在前闭后开区间查找的关键字的上界，返回大于target的第一个元素位置。注意：返回查找元素的最后一个可安插位置，也就是“元素值>查找值”的第一个元素的位置。同样，如果target大于数组中全部元素，返回的是last。(注意：数组下标越界)
 
 
 
@@ -66,6 +66,14 @@ template<
 默认container是vector。
 
 默认compare策略是less。因为默认是大顶堆，首先输出最大元素，所以最开始来的元素最后才输出。记住大顶堆比较策略是`std::less<T>`，小顶堆的比较策略是`std::greater<T>`
+
+
+
+## atoi
+
+int   atoi( const char *str );
+
+将char*的字符串转化成整数
 
 
 
@@ -183,7 +191,7 @@ ListNode* reverse(ListNode* node){
 
 情况二：两个链表不相交。由于两个链表没有公共节点，两个指针也不会同时到达两个链表的尾节点，因此两个指针都会遍历完两个链表，指针pA 移动了m+n 次、指针pB 移动了 n+m 次之后，两个指针会同时变成空值null，此时返回null，满足循环条件。
 
-#### [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
+#### :o:[206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
 
 ```c++
 ListNode* reverseList(ListNode* head) {
@@ -586,7 +594,7 @@ ListNode* oddEvenList(ListNode* head) {
 
 
 
-#### [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+#### :o:[92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
 
 **反转链表精髓：**
 
@@ -1165,7 +1173,7 @@ TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
     }
 ```
 
-#### [105. 从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)（★面试常考）
+#### :o:[105. 从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)（★面试常考）
 
 >  代码思路还是跟654题一模一样，可以说，构造二叉树的题递归代码都差不多！
 >
@@ -1209,7 +1217,7 @@ TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
     }
 ```
 
-#### [106. 从中序与后序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+#### :o:[106. 从中序与后序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 
 > 跟上一题思路一模一样
 >
@@ -2552,7 +2560,7 @@ int numTrees(int n) {
 } 
 ```
 
-#### [377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv/)、
+#### :o:[377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv/)、
 
 排列组合问题，这道题还可以这样翻译：
 
@@ -2916,7 +2924,7 @@ public:
 
 01背包和完全背包的区别就在于一件物品能不能反复被取。在代码中就是`dp[i][j]`的状态和`dp[i-1][j], dp[i-1][j-w[i-1]]还是dp[i-1][j], dp[i][j-w[i-1]]`。仔细观察可以发现即是i（01背包）或者i-1（完全背包）。那么如果是一维数组的话，内循环是逆序（01背包），内循环不需要逆序（完全背包）
 
-#### [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
+#### :o:[322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
 
 ```c++
 /**一维数组的写法，但是我感觉不好理解**/
@@ -3199,7 +3207,7 @@ map<TreeNode*, int> temp;
     }
 ```
 
-### 股票问题
+### :o:股票问题
 
 #### [121. 买卖股票的最佳时机（只能买卖一次）](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
 
@@ -3366,7 +3374,17 @@ int maxProfit(vector<int>& prices, int fee) {
 
 ### 子序列问题
 
-子序列问题其实都不难，其中最经典的就是最长公共子序列问题，这个问题的标准解答方式从1143题中就可窥见，是具有一个非常成熟的体系的。而其它子序列问题都是求最长，其实都不难，这个类型如果碰到了不应该有问题。
+子序列问题是常见的算法问题，而且并不好解决。
+
+首先，子序列问题本身就相对子串、子数组更困难一些，因为前者是不连续的序列，而后两者是连续的，就算穷举你都不一定会，更别说求解相关的算法问题了。
+
+而且，子序列问题很可能涉及到两个字符串，比如前文「最长公共子序列」，如果没有一定的处理经验，真的不容易想出来。所以本文就来扒一扒子序列问题的套路，其实就有两种模板，相关问题只要往这两种思路上想，十拿九稳。
+
+一般来说，这类问题都是让你求一个**最长子序列**，因为最短子序列就是一个字符嘛，没啥可问的。一旦涉及到子序列和最值，那几乎可以肯定，**考察的是动态规划技巧，时间复杂度一般都是 O(n^2)**。
+
+原因很简单，你想想一个字符串，它的子序列有多少种可能？起码是指数级的吧，这种情况下，不用动态规划技巧，还想怎么着？
+
+既然要用动态规划，那就要定义 dp 数组，找状态转移关系。我们说的两种思路模板，就是 dp 数组的定义思路。不同的问题可能需要不同的 dp 数组定义来解决。
 
 #### [674. 最长连续递增序列](https://leetcode-cn.com/problems/longest-continuous-increasing-subsequence/)
 
@@ -3425,53 +3443,54 @@ int findLength(vector<int>& nums1, vector<int>& nums2) {
 
 ```c++
 int findLength(vector<int>& nums1, vector<int>& nums2) {
-        return nums1.size() <= nums2.size() ? theMostImportant(nums1,nums2) : theMostImportant(nums2, nums1);
+    int n1 = nums1.size();
+    int n2 = nums2.size();
+    return n1 > n2 ? sliding(nums2, nums1) : sliding(nums1, nums2);
+}
+int sliding(vector<int>& short_vec, vector<int>& long_vec){
+    int n1 = short_vec.size();
+    int n2 = long_vec.size();
+    int max_repeat = 0;
+
+    //短的和长的数组的最右边对齐
+    for(int i = 1; i <= n1; i++){
+        int tmp = get_repeat(short_vec, 0, long_vec, n2-i,i);
+        cout<<"tmp1:"<<tmp<<endl;
+        max_repeat = max(tmp, max_repeat);
     }
 
-    int theMostImportant(vector<int>& nums1, vector<int>& nums2){
-        int n1 = nums1.size();
-        int n2 = nums2.size();
-        int the_max = 0;
-
-        //第二个滑动窗口进入的情况
-        //包含n1.len()>n2.len()情况
-        for(int len = 1; len <= n1; len++){
-            int temp = getMaxCom(nums1, 0, nums2, n2 - len, len);
-            the_max = max(temp, the_max);
-        }
-
-        //中间过程
-        //存在n1.len()<n2.len()
-        for(int i = n2; i - n1 >= 0; i--){
-            int temp = getMaxCom(nums1, 0, nums2, i-n1, n1);
-            the_max = max(the_max, temp);
-        }
-
-        //出去时的处理
-        //出去的时候和进来倒序就好了
-        for(int len = n1; len > 0; len--){
-            int temp = getMaxCom(nums1, n1 - len, nums2, 0, len);
-            the_max = max(temp, the_max);
-        }
-        return the_max;
+    //短的和长的数组的最左边对齐
+    //以长数组的长度为参考
+    for(int i = n2; i - n1>=0; i-- ){
+        int tmp = get_repeat(short_vec, 0, long_vec, i-n1, n1);
+        cout<<"tmp2:"<<tmp<<endl;
+        max_repeat = max(tmp, max_repeat);
     }
 
-    //处理公共子串通用的办法
-    int getMaxCom(vector<int>& nums1, int index1, vector<int>& nums2, int index2, int len){
-        int ret = 0;
-        int max_com = 0;
-        //判断重合部分是否有相同子序列
-        for(int i = 0;i < len; i++){
-            if(nums1[i + index1] == nums2[i + index2]){
-                max_com++;
-            }
-            else if(max_com > 0){
-                ret = max(ret, max_com);
-                max_com = 0;
-            }
-        }
-        return max(max_com, ret);
+    //短数组的右边和长数组的左边对齐
+    //以短数组的长度为参考
+    for(int i = n1; i >= 1; i--){
+        int tmp = get_repeat(short_vec, n1-i, long_vec, 0, i);
+        cout<<"tmp3:"<<tmp<<endl;
+        max_repeat = max(tmp, max_repeat);
     }
+    return max_repeat;
+}
+
+int get_repeat(vector<int>& short_vec, int i, vector<int>& long_vec, int j, int common_len){
+    int max_repeat = 0;
+    int count = 0;    
+    for(int index = 0; index < common_len; index++){
+        if(short_vec[i+index] == long_vec[j+index]){
+            count++;
+            max_repeat = max(count, max_repeat);
+        }else{
+            max_repeat = max(count, max_repeat);
+            count = 0;
+        }
+    }
+    return max_repeat;
+} 
 ```
 
 #### [53. 最大子序和](https://leetcode-cn.com/problems/maximum-subarray/)
@@ -3495,90 +3514,133 @@ int maxSubArray(vector<int>& nums) {
     }
 ```
 
-#### [300. 最长递增子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
+#### :o:[300. 最长递增子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
 
-- 注意事项：跟上题一样，比不是说到结尾最后一个就是最长的，要求dp中的最大值
+这道题第二次做的时候一时间没有想到还。之前我老是想着nums[i-1]与nums[i-2]做匹配，其实是不对的，因为相邻的两个数其实没什么关系，不能这样子比较
 
 ```c++
 int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> dp(n + 1, 1);
-        for(int i = 2; i < n + 1; i++){
-            for(int j = 1; j < i; j++){
-                if(nums[i - 1] > nums[j - 1]){
-                    dp[i] = max(dp[i], dp[j] + 1);
-                }
+    int n = nums.size();
+    vector<int> dp(n + 1, 1);
+    for(int i = 2; i < n + 1; i++){
+        for(int j = 1; j < i; j++){
+            if(nums[i - 1] > nums[j - 1]){
+                dp[i] = max(dp[i], dp[j] + 1);
             }
         }
-        int max_sub = 0;
-        for(auto n:dp){
-            max_sub = max(max_sub, n);
-        }
-        return max_sub;
     }
+    int max_sub = 0;
+    for(auto n:dp){
+        max_sub = max(max_sub, n);
+    }
+    return max_sub;
+}
+
+int lengthOfLIS(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> dp(n+1, 1);
+    int tmp = nums[0];
+    for(int i = 2; i < n + 1; i++){
+        int tmp = 1;
+        for(int j = 1; j < i; j++){
+            if(nums[i-1] > nums[j-1]){
+                tmp = max(tmp, dp[j] + 1);
+            }
+        }
+        dp[i] = tmp;
+    }
+    sort(dp.begin(), dp.end(), std::greater<int>());
+    return dp[0];
+}
 ```
 
-#### [1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
+**二分**
+
+时间复杂度nlogn
+
+维护一个结果数组，如果当前元素比结果数组的值都大的的话，就追加在结果数组后面（相当于递增序列长度加了1）；否则的话用当前元素覆盖掉第一个比它大的元素(增长缓慢才可能是最长的)（这样做的话后续递增序列才有可能更长，即使并没有更长，这个覆盖操作也并没有副作用哈，当然这个覆盖操作可能会让最终的结果数组值并不是最终的递增序列值，这无所谓）
+
+操作只有两个：覆盖和追加，只有大于最后一个元素才会追加，其他时候都是覆盖
+
+```c++
+//比较粗糙的二分，每次循环都求了res数组的大小，效率太低
+ int lengthOfLIS(vector<int>& nums) {
+     int n = nums.size();
+     vector<int> res;
+     res.push_back(nums[0]);
+     int tmp = nums[0];
+     for(int i = 1; i < n; i++){
+         if(nums[i] > tmp){
+             res.push_back(nums[i]);
+             tmp = nums[i];
+         }
+         else if(tmp == nums[i]){
+             continue;
+         }
+         else{
+             int index = lower_bound(res.begin(), res.end(), nums[i]) - res.begin();
+             cout<<"nums[i]:"<<nums[i]<<endl;
+             cout<<"index:"<<index<<endl;
+             res[index] = nums[i];
+             int n = res.size();
+             tmp = res[n-1];
+         }
+     }
+     return res.size();
+ }
+
+//改进的二分
+nt lengthOfLIS(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> res;
+    res.push_back(nums[0]);
+    int count = 0;
+    for(int i = 1; i < n; i++){
+        int index = lower_bound(res.begin(), res.end(), nums[i]) - res.begin();
+        //之前用的是upper_bound，结果[4,10,4,3,8,9]未通过
+        if(index > count){
+            res.push_back(nums[i]);
+            count++;
+        }else{
+            res[index] = nums[i];
+        }
+
+    }
+    return res.size();
+}
+```
+
+
+
+#### :o:[1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
 
 - 最长公共子序列问题是一类问题，包括下面的583和712题，都是一样的
 
-- $dp[i][j]$的含义是字符串s1的前i个和字符串s2的前j个最长公共子序列
-
-  [可以参考这个链接来写](https://mp.weixin.qq.com/s/ZhPEchewfc03xWv9VP3msg)
-
-  如果s1[i] = =s2[j]，如下图：
-
-  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20211010230151.webp" alt="图片" style="zoom:50%;" />
-
-  如果s1[i] !=s2[j]，如下图：
-
-  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20211010230223.webp" alt="图片" style="zoom:50%;" />
-
-  伪代码如下：
-
-  ```java
-  // 定义：计算 s1[i..] 和 s2[j..] 的最长公共子序列长度
-  int dp(String s1, int i, String s2, int j) {
-      if (s1.charAt(i) == s2.charAt(j)) {
-          return 1 + dp(s1, i + 1, s2, j + 1)
-      } else {
-          // s1[i] 和 s2[j] 中至少有一个字符不在 lcs 中，
-          // 穷举三种情况的结果，取其中的最大结果
-          return max(
-              // 情况一、s1[i] 不在 lcs 中
-              dp(s1, i + 1, s2, j),
-              // 情况二、s2[j] 不在 lcs 中
-              dp(s1, i, s2, j + 1),
-              // 情况三、都不在 lcs 中
-              dp(s1, i + 1, s2, j + 1)
-          );
-      }
-  }
-  ```
-
-  第三种情况可以忽略
+  **公共子序列，打表就能做出来了！！典型的打表题**
 
 - 以下是代码部分
 
-```c++
-int longestCommonSubsequence(string text1, string text2) {
-        int n = text1.size();
-        int m = text2.size();
-        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-        for(int i = 1; i < n + 1; i++){
-            for(int j = 1; j < m + 1; j++){
-                if(text1[i - 1] == text2[j - 1]){
-                    dp[i][j] = dp[i-1][j-1] + 1;
-                }else{
-                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-                }
-            }
-        }
-        return dp[n][m];
-    }
-```
+  ```c++
+  int longestCommonSubsequence(string text1, string text2) {
+      int n = text1.size();
+      int m = text2.size();
+      vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+      for(int i = 1; i < n + 1; i++){
+          for(int j = 1; j < m + 1; j++){
+              if(text1[i - 1] == text2[j - 1]){
+                  dp[i][j] = dp[i-1][j-1] + 1;
+              }else{
+                  dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+              }
+          }
+      }
+      return dp[n][m];
+  }
+  ```
 
-#### [583. 两个字符串的删除操作](https://leetcode-cn.com/problems/delete-operation-for-two-strings/)
+  
+
+#### :o:[583. 两个字符串的删除操作](https://leetcode-cn.com/problems/delete-operation-for-two-strings/)
 
 - 思路：核心代码就是最长公共子序列，但是需要注意的是结果
 
@@ -3588,23 +3650,20 @@ int longestCommonSubsequence(string text1, string text2) {
 
 ```c++
 int minDistance(string word1, string word2) {
-        int n = word1.size();
-        int m = word2.size();
-        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-        for(int i = 1; i < n + 1; i++){
-            for(int j = 1; j < m + 1; j++){
-                if(word1[i - 1] == word2[j - 1]){
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                }else{
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-                }
+    int n = word1.size();
+    int m = word2.size();
+    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+    for(int i = 1; i < n + 1; i++){
+        for(int j = 1; j < m + 1; j++){
+            if(word1[i - 1] == word2[j - 1]){
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            }else{
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
             }
         }
-        if(dp[n][m] == 0){
-            return n+m;
-        }
-        return n+m-2*dp[n][m];
     }
+    return n+m-2*dp[n][m];
+}
 ```
 
 #### [712. 两个字符串的最小ASCII删除和](https://leetcode-cn.com/problems/minimum-ascii-delete-sum-for-two-strings/)
@@ -3715,41 +3774,72 @@ int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
 
   > 如果有大量输入的 S，称作 S1, S2, ... , Sk 其中 k >= 10 亿，你需要依次检查它们是否为 T 的子序列。在这种情况下，你会怎样改变代码？
 
-  在简单的代码中其实最坏的情况就是我们不仅遍历了s而且最坏的话可能遍历完t(因为如果t最后一个字符匹配到s的话)，因此我们想一种办法，即只遍历s但是不完全遍历t。因此我们可以参考kmp算法，将待比对的t字符串研究透。
+  空间换时间的思想。关键点是：**利用一个二维数组记录每个位置的下一个要匹配的字符的位置**，这里的字符是`'a' ~ 'z'`，所以这个数组的大小是 `dp[n][26]`，n 为 T 的长度。那么每处理一个子串只需要扫描一遍 S 即可，因为在数组的帮助下我们对 T 是“跳跃”扫描的。
 
-  用一个数组存储t字符串的信息，二维数组的长度是(t.size(), 26)，第一行必须为空，到时候自己画一下就知道了。然后每一列表示a-z，如果这个字符在后面有，就现实在后面的位置，如果没有就是-1。我觉得有点跳表的思想。
+  如下图一，很自然的，当T索引为0时候，对应的第0列就是当前字符在T中出现位置的下标，没有的标-1就行；
 
-  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20211012114139.jpg" alt="451f324be3121d731c1bd49ae62db5d" style="zoom: 25%;" />
+  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20211012114139.jpg" alt="451f324be3121d731c1bd49ae62db5d" style="zoom: 15%;float:left" />
 
-  ![20200426180603 .jpg](https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20211012114201.jpeg)
-
-  这两个图应该能说明思想，其实就是跳表的思想，只要有-1就不比了，不用完全遍历t，时间换空间的思想。
-
+  ```c
+  /*ahbgdc这个T字符串构成的数组如下：重点在于从后往前构造会简单很多*/
+  1 -1 -1 -1 -1 -1 -1 
+  3 3 3 -1 -1 -1 -1 
+  6 6 6 6 6 6 -1 
+  5 5 5 5 5 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  4 4 4 4 -1 -1 -1 
+  2 2 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  -1 -1 -1 -1 -1 -1 -1 
+  ```
+  
+  
+  
+  这个图应该能说明思想，其实就是跳表的思想，只要有-1就不比了，不用完全遍历t，时间换空间的思想。
+  
   ```c++
   bool isSubsequence(string s, string t) {
-          t.insert(0, "");
-          int len = t.size();
-          vector<vector<int>> vec(len, vector<int>(26, 0));
-          //创建一个二维数组
-          int next_pos = -1;
-          for(char char_t= 'a'; char_t <= 'z'; char_t++){
-              for(int i = len-1; i >=0 ;i--){
-                  vec[i][char_t-'a'] = next_pos;
-                  if(t[i] == char_t){
-                      next_pos = i;
-                  }
+      t.insert(0, ' ');
+      int len = t.size();
+      vector<vector<int>> vec(len, vector<int>(26, 0));
+      //创建一个二维数组
+  
+      for(char char_t= 'a'; char_t <= 'z'; char_t++){
+          int next_pos = -1;//这个要放在循环里面！不能放在外面！
+          for(int i = len-1; i >=0 ;i--){
+              vec[i][char_t-'a'] = next_pos;
+              if(t[i] == char_t){
+                  next_pos = i;
               }
           }
-          //开始匹配
-          int index = 0;
-          for(char c : s){
-              index = vec[index][c - 'a'];
-              if(index == -1){
-                  return false;
-              }
-          }
-          return true;
       }
+      //开始匹配
+      int index = 0;
+      for(char c : s){
+          index = vec[index][c - 'a'];
+          if(index == -1){
+              return false;
+          }
+      }
+      return true;
+  }
   ```
 
 #### [115. 不同的子序列](https://leetcode-cn.com/problems/distinct-subsequences/)
@@ -3772,9 +3862,9 @@ int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
       }
   ```
 
-  这里面有个问题就是`dp[i][j] = dp[i - 1][j - 1]`可以理解，但是为啥有个`dp[i - 1][j]`？就很让人捉摸不透
+  **状态转移方程为啥是上述的？只有一个办法，就是画表。以后看到子序列问题的dp ，画表就完事儿了！！！！**
 
-  例如： s：bagg 和 t：bag ，s[3] 和 t[2]是相同的，但是字符串s也可以不用s[3]来匹配可以用s[2]匹配，即用s[0]s[1]s[2]组成的bag。
+  <img src="C:\Users\ACER\AppData\Roaming\Typora\typora-user-images\image-20220501220905568.png" alt="image-20220501220905568" style="zoom:33%;float:left" />
 
   ```c++
   int numDistinct(string s, string t) {
@@ -3804,148 +3894,144 @@ int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
       }
   ```
 
-#### [72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)
+#### :o:[72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)
 
 - 前面说过两个单词或者两个字符串的问题不是双指针就是动态规划问题，很明显这个这么难的问题就是动态规划。
 
   同时又是两个字符串比较，那肯定$dp[i][j]$啊！主要是这个状态转移方程不太好想
 
   当两个字符不相等的时候，有三种操作：删除、插入和替换！！！这才是状态转移方程的重点！！
+  
+  当 `word1[i] == word2[j]`，`dp[i][j] = dp[i-1][j-1]`；
+  
+  当 `word1[i] != word2[j]`，`dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1`
+  
+  其中，`dp[i-1][j-1]` 表示替换操作，`dp[i-1][j]` 表示删除操作，`dp[i][j-1]` 表示插入操作。
 
 ```c++
 int third_min(int a, int b, int c){
-        int temp = a < b ? a : b; 
-        return temp < c ? temp : c;
-    }
-    int minDistance(string word1, string word2) {
-        int n = word1.size();
-        int m = word2.size();
-        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-        //确定完dp后还是得考虑极端情况
-        for(int i = 0; i < m + 1; i++){
-            dp[0][i] = i ;
-        }
-        for(int i = 0; i < n + 1; i++){
-            dp[i][0] = i ;
-        }
-
-        for(int i = 1; i < n + 1; i++){
-            for(int j = 1; j < m + 1; j++){
-                if(word1[i - 1] == word2[j - 1]){
-                    dp[i][j] = dp[i - 1][j - 1];
-                }else{
-                    dp[i][j] = third_min(
-                        dp[i - 1][j - 1] + 1, //替换
-                        dp[i - 1][j] + 1,     //word1删除一个字符然后换和word2相同的，这个是一个操作
-                        dp[i][j - 1] + 1     //word2删除一个字符然后换和word1相同的，这个是一个操作
-                    );
-                }
-            }
-        }
-        return dp[n][m];
-    }
-```
-
-#### [583. 两个字符串的删除操作](https://leetcode-cn.com/problems/delete-operation-for-two-strings/)
-
-- 上一道题删除增加都做过了，这道题更简单了，只有删除，轻轻松松dp就出来了
-
-```c++
+    int temp = a < b ? a : b; 
+    return temp < c ? temp : c;
+}
 int minDistance(string word1, string word2) {
-        int n = word1.size();
-        int m = word2.size();
-        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
-        //初始化dp
-        for(int i = 0; i < n + 1; i++){
-            dp[i][0] = i;
-        }
-        for(int i = 0; i < m + 1; i++){
-            dp[0][i] = i;
-        }
-        //状态转移
-        for(int i = 1; i < n + 1; i++){
-            for(int j = 1; j <m + 1; j++){
-                if(word1[i - 1] == word2[j - 1]){
-                    dp[i][j] = dp[i-1][j-1];
-                }else{
-                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + 1;
-                }
+    int n = word1.size();
+    int m = word2.size();
+    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+    //确定完dp后还是得考虑极端情况
+    for(int i = 0; i < m + 1; i++){
+        dp[0][i] = i ;
+    }
+    for(int i = 0; i < n + 1; i++){
+        dp[i][0] = i ;
+    }
+
+    for(int i = 1; i < n + 1; i++){
+        for(int j = 1; j < m + 1; j++){
+            if(word1[i - 1] == word2[j - 1]){
+                dp[i][j] = dp[i - 1][j - 1];
+            }else{
+                dp[i][j] = third_min(
+                    dp[i - 1][j - 1] + 1, //替换
+                    dp[i - 1][j] + 1,     //word1删除一个字符然后换和word2相同的，这个是一个操作
+                    dp[i][j - 1] + 1     //word2删除一个字符然后换和word1相同的，这个是一个操作
+                );
             }
         }
-        return dp[n][m];
     }
+    return dp[n][m];
+}
 ```
 
-#### [647. ☆回文子串](https://leetcode-cn.com/problems/palindromic-substrings/)
 
-- 还是用动态规划吧，中心扩散没太看懂
 
-  [参考链接](https://leetcode-cn.com/problems/palindromic-substrings/solution/dai-ma-sui-xiang-lu-dai-ni-xue-tou-dpzi-vidge/)
+### 回文子串
 
-  说一下自己的想法，因为就单个字符串，因此我之前说过单个字符串的话是要有范围的。 
+首先回文子串问题涉及到的都是单个字符串，所以如果是单个字符串用动态规划的基本都是二维的，i-j
 
-  为什么外循环会从len-1开始，对于字符串“cabac来说”，如果s[0]的c=s[4]的c，那么只需要看“aba”即可，如果你的for循环从0开始的换，你都从0过来了还看什么aba，只有从后往前，才能看aba吧
+其次，**回文字符串，都是从后往前遍历的**，这个要记住。因为dp的状态转移方程特性决定的
+
+#### [647. 回文子串](https://leetcode-cn.com/problems/palindromic-substrings/)
+
+还是用动态规划吧，中心扩散没太看懂
+
+[参考链接](https://leetcode-cn.com/problems/palindromic-substrings/solution/by-nehzil-a8ue/)
+
+说一下自己的想法，因为就单个字符串，因此我之前说过**单个字符串的话是要有范围的。** 
+
+为什么外循环会从len-1开始，对于字符串“cabac来说”，如果s[0]的c=s[4]的c，那么只需要看“aba”即可，如果你的for循环从0开始的换，你都从0过来了还看什么aba，只有从后往前，才能看aba吧
+
+
 
 ```c++
 int countSubstrings(string s) {
-       int len = s.size();
-       vector<vector<bool>> dp(len, vector<bool>(len, false));
-       int count = 0;
-       for(int i = len - 1; i >=0; i--){
-           for(int j = i; j < len; j++){
-               if(s[i] == s[j] ){
-                   if(j-i <= 1){
-                       count++;
-                       dp[i][j] = true;
-                   }
-                   else if(dp[i + 1][j - 1]){
-                        count++;
-                        dp[i][j] = true;
-                   }
-               }
-           }
-       }
-       return count;
+    int len = s.size();
+    vector<vector<bool>> dp(len, vector<bool>(len, false));
+    int count = 0;
+    for(int i = len - 1; i >= 0; i--){
+        for(int j = i; j < len; j++){
+            if(s[i] == s[j] ){
+                if(j-i <= 1){
+                    count++;
+                    dp[i][j] = true;
+                }
+                else if(dp[i + 1][j - 1]){
+                    count++;
+                    dp[i][j] = true;
+                }
+            }
+        }
     }
+    return count;
+}
 ```
 
 #### [516. 最长回文子序列](https://leetcode-cn.com/problems/longest-palindromic-subsequence/)
 
-- 思路：这道题一定要和647放在一起看，这两道题是一模一样的类型。
+[没思路看这个](https://leetcode-cn.com/problems/longest-palindromic-subsequence/solution/zi-xu-lie-wen-ti-tong-yong-si-lu-zui-chang-hui-wen/)
 
-  这道题的难点主要在于dp的状态转移过程，来分析一下
+思路：这道题一定要和647放在一起看，这两道题是一模一样的类型。
 
-  如果s[i]与s[j]相同，那么$dp[i][j] = dp[i + 1][j - 1] + 2$,因为回文串的个数嘛，+2
+这道题的难点主要在于dp的状态转移过程，来分析一下
 
-  如果s[i]与s[j]不相同，说明s[i]和s[j]的同时加入 并不能增加[i,j]区间回文子串的长度，那么分别加入s[i]、s[j]看看哪一个可以组成最长的回文子序列。
+如果s[i]与s[j]相同，那么$dp[i][j] = dp[i + 1][j - 1] + 2$,因为回文串的个数嘛，+2
 
-  加入s[j]的回文子序列长度为$dp[i + 1][j]$
+如果s[i]与s[j]不相同，说明s[i]和s[j]的同时加入 并不能增加[i,j]区间回文子串的长度，那么分别加入s[i]、s[j]看看哪一个可以组成最长的回文子序列。
 
-  加入s[i]的回文子序列长度为$dp[i][j - 1]$
+加入s[j]的回文子序列长度为$dp[i + 1][j]$
 
-  那么dp[i][j]一定是取最大的，即：$dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])$
+加入s[i]的回文子序列长度为$dp[i][j - 1]$
+
+那么dp[i][j]一定是取最大的，即：$dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])$
 
 ```c++
-int longestPalindromeSubseq(string s) {
-        int len = s.size();
-        vector<vector<int>> dp(len, vector<int>(len, 0));
-        for(int i = 0; i < len; i++){
-            dp[i][i] = 1;
-        }
-        for(int i = len - 1; i >= 0; i--){
-            for(int j = i + 1; j< len; j++){
-                if(s[i] == s[j]){
-                    dp[i][j] = dp[i + 1][j - 1] + 2;
-                }else{
-                    dp[i][j] = max(dp[i+1][j], dp[i][j-1]);
-                }
-            }
-        }
-        return dp[0][len-1];
-    }
+ int longestPalindromeSubseq(string s) {
+     int len = s.size();
+     vector<vector<int>> dp(len+1, vector<int>(len+1, 0));
+     for(int i = 1; i < len + 1; i++ ){
+         dp[i][i] = 1;
+     }
+     for(int i = len ; i >= 1; i--){
+         //这里j从i+1开始，和上一题不一样，因为不考虑本身
+         for(int j = i + 1; j < len+1; j++){
+             if(s[i-1] == s[j-1]){
+                 dp[i][j] = dp[i+1][j-1] + 2;
+             }else{
+                 //不构成回文串了，不能+1了
+                 dp[i][j] = max(dp[i][j-1], dp[i+1][j]);
+             }
+         }
+     }
+     return dp[1][len];
+ }
 ```
 
+#### [1312. 让字符串成为回文串的最少插入次数](https://leetcode-cn.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/)
+
+
+
 ### 其他应用题
+
+**另类的DP套路！**
 
 #### [887. 鸡蛋掉落](https://leetcode-cn.com/problems/super-egg-drop/)
 
@@ -4632,7 +4718,11 @@ int monotoneIncreasingDigits(int n) {
     }
   ```
 
+
+
 ## DFS（回溯算法）
+
+**需要经常的刷**
 
 > 对于回溯算法的总结和概括，有两个说的特别好。
 >
@@ -4686,7 +4776,7 @@ int monotoneIncreasingDigits(int n) {
   >
   > 下图表现得最为直观：
   >
-  > <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210814164606.png" alt="图片" style="zoom: 50%;" />
+  > <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210814164606.png" alt="图片" style="zoom: 67%; float: left;" />
 
   代码模板如下：
 
@@ -4698,7 +4788,7 @@ int monotoneIncreasingDigits(int n) {
       }
   
       for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {
-          处理节点;
+          处理节点（做选择）;
           backtracking(路径，选择列表); // 递归
           回溯，撤销处理结果
       }
@@ -4812,6 +4902,8 @@ vector<vector<int>> res;
 
 ### **组合问题**
 
+**重复的话就是排列问题，i不用指定。后面的基本都是i=start**
+
 #### [77. 组合](https://leetcode-cn.com/problems/combinations/)
 
 下面这幅图就是本题的思路
@@ -4820,72 +4912,73 @@ vector<vector<int>> res;
 
 ```c++
 vector<vector<int>> res;
-    vector<int> temp;
-    vector<vector<int>> combine(int n, int k) {
-        back_tracing(n ,k, 1);
-        return res;
-    }
+vector<int> temp;
+vector<vector<int>> combine(int n, int k) {
+    back_tracing(n ,k, 1);
+    return res;
+}
 
-    void back_tracing(int n, int k, int start){
-        if(temp.size() == k){
-            res.push_back(temp);
-            return;
-        }
-        for(int i = start; i <= n; i++){
-            temp.push_back(i);
-            back_tracing(n, k, i+1);
-            temp.pop_back();
-        }
+void back_tracing(int n, int k, int start){
+    if(temp.size() == k){
+        res.push_back(temp);
+        return;
     }
+    for(int i = start; i <= n; i++){
+        temp.push_back(i);
+
+        back_tracing(n, k, i+1);
+        temp.pop_back();
+    }
+}
 ```
 
-- 重点
+**重点，第二次写还是遇到了相同的问题**
 
-  这是一道基本的组合问题，最最基本。这道题出问题的点在于不能出现像[2,2]或者[3,2]这样的组合
+这是一道基本的组合问题，最最基本。这道题出问题的点在于不能出现像[2,2]或者[3,2]这样的组合
 
-  对于[2,2]这样的，我们必须要保证同一个树枝下，上一个要小下一个才行，
+对于[2,2]这样的，我们必须要保证同一个树枝下，上一个要小下一个才行，
 
-  对于[3,2]这样的，我们必须保证同一层，前一个要小于后一个才行
+对于[3,2]这样的，我们必须保证同一层，前一个要小于后一个才行
 
-  写这道题的时候最开始会出现`[[1,2],[1,3],[1,4],[2,2],[2,3],[2,4],[3,2],[3,3],[3,4],[4,2],[4,3],[4,4]]`这样的答案，苦死很久没发现为什么
+不然的话写这道题的时候最开始会出现`[[1,1],[1,2],[1,3],[1,4],[2,2],[2,3],[2,4],[3,2],[3,3],[3,4],[4,2],[4,3],[4,4]]`这样的答案，苦死很久没发现为什么
 
-  其实问题出在for循环中` back_tracing(n, k, i+1);`这段代码
+其实问题出在for循环中` back_tracing(n, k, i+1);`这段代码
 
-  对于同一树枝下的递归来说，我们考虑for时候，主要放在循环变量i上，而不是start上，因为start是控制层的递进。而i是控制递归的递进！！
-  
-  > 在组合问题中，需要设置一个start变量。因为在递归层中，start决定从哪个索引开始遍历
-  >
-  > 每次从集合中选取元素，可选择的范围都在进行收缩，调整可选择的范围靠的就是start
+对于同一树枝下的递归来说，我们考虑for时候，主要放在循环变量i上，而不是start上，因为start是控制层的递进。而i是控制递归的递进！！
+
+第二次写补充： `for 选择 in 选择列表` 其实由于是组合问题，所以每次选择列表都要少一个数，因为不能重复！所以选择列表必须要i+1
+
+> 在组合问题中，需要设置一个start变量。因为在递归层中，start决定从哪个索引开始遍历
+>
+> 每次从集合中选取元素，可选择的范围都在进行收缩，调整可选择的范围靠的就是start
 
 #### [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)
 
 ```c++
 vector<vector<int>> res;
-    vector<int> temp;
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        back_tracing(candidates, 0, 0, target);
-        return res;
-    }
+vector<int> temp;
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    back_tracing(candidates, 0, 0, target);
+    return res;
+}
 
-    void back_tracing(vector<int>& candidates,int sum, int start, int target){
-        if(sum == target){
-            res.push_back(temp);
-            return;
-        }
-        else if(sum > target ){
-            return;
-        }
-        for(int i = start; i < candidates.size(); i++){
-            temp.push_back(candidates[i]);
-            sum += candidates[i];
-            back_tracing(candidates, sum, i, target);
-            sum -= candidates[i];
-            temp.pop_back();
-        }
+void back_tracing(vector<int>& candidates,int sum, int start, int target){
+    if(sum == target){
+        res.push_back(temp);
+        return;
     }
+    else if(sum > target ){
+        return;
+    }
+    for(int i = start; i < candidates.size(); i++){
+        temp.push_back(candidates[i]);
+        sum += candidates[i];
+        back_tracing(candidates, sum, i, target);
+        sum -= candidates[i];
+        temp.pop_back();
+    }
+}
 ```
-
-
 
 - 重点总结
 
@@ -4915,128 +5008,76 @@ vector<vector<int>> res;
 
 #### [40. 组合总和 II](https://leetcode-cn.com/problems/combination-sum-ii/)
 
-> 思路 和39题一模一样，只不过不允许重复而已
+> 和47题条件一样，但是本质是属于求组合数的。
 
 ```c++
 vector<vector<int>> res;
-    vector<int> temp;
-    vector<vector<int>> res_with_only;
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        sort(candidates.begin(), candidates.end());
-        back_tracing(candidates, 0, target, 0);
-        set<vector<int>> s;
-        for(int i = 0; i < res.size(); i++){
-            s.insert(res[i]);
-        }
-        for(auto it = s.cbegin(); it != s.cend(); it++){
-            res_with_only.push_back(*it);
-        }
-        return res_with_only;
+vector<int> temp;
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+    int len = candidates.size();
+    sort(candidates.begin(), candidates.end());
+    vector<bool> is_used(len, false);
+    back_tracing(candidates, target, len, 0, 0, is_used);
+    return res;
+}
+void back_tracing(vector<int>& candidates, int target, int len, int start, int sum, vector<bool>& is_used){
+    if(sum == target){
+        res.push_back(temp);
+        return;
     }
-    void back_tracing(vector<int>& candidates, int sum, int target, int start){
-        if(sum == target){
-            res.push_back(temp);
-            return;
-        }
-        else if(sum > target){
-            return;
-        }
-        for(int i = start; i < candidates.size(); i++){
-            temp.push_back(candidates[i]);
-            sum += candidates[i];
-            back_tracing(candidates, sum, target, i+1);
-            sum -= candidates[i];
-            temp.pop_back();
-        }
-    }   
-```
-
-上面的代码是有问题的，原因在于超时。由于vector<vector<int>>数组中有重复的元素。因此我用set来筛除重复，但是set底层是红黑树，效率太低了，导致超时，因此上述代码不失为一种思路
-
-其实这也引出了这道题的重点，如何筛除重复元素？
-
-参考全排列II，我们筛除重复的元素首先①排序②用了一行代码解决的，忘了的可以参考一下
-
-因此这道题的另一个思路也是去重复，和47题非常类似
-
-```c++
-vector<vector<int>> res;
-    vector<int> temp;
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        sort(candidates.begin(), candidates.end());
-        back_tracing(candidates, 0, target, 0);
-        return res;
+    else if(sum > target){
+        return;
     }
-    void back_tracing(vector<int>& candidates, int sum, int target, int start){
-        if(sum == target){
-            res.push_back(temp);
-            return;
+    for(int i = start; i < len; i++){
+        //这道题和47题特别想，一个是排列一个是组合
+        //关键就在于i=start还是i=1
+        if(i > 0 && is_used[i-1]==false && candidates[i-1] == candidates[i]){
+            continue;
         }
-        else if(sum > target){
-            return;
-        }
-        for(int i = start; i < candidates.size(); i++){
-            if(i > start && candidates[i] == candidates[i-1]){
-                continue;
-            }
-            temp.push_back(candidates[i]);
-            sum += candidates[i];
-            back_tracing(candidates, sum, target, i+1);
-            sum -= candidates[i];
-            temp.pop_back();
-        }
-    }   
+        temp.push_back(candidates[i]);
+        is_used[i] = true;
+        sum += candidates[i];
+        back_tracing(candidates, target, len, i+1, sum, is_used);
+        sum -= candidates[i];
+        temp.pop_back();
+        is_used[i] = false;            
+    }
+
+}
 ```
 
 
-
-- 涉及的算法知识
-
-  在第一个代码中我使用了set降重，然后遍历set。知识点就是遍历set的时候的方式，我们要用到迭代器。
-
-  ```c++
-  set<int> s;
-  //创建迭代器的方式一
-  set<int>::iterator it; 
-  it = s.begin();
-  //创建迭代器的方式二
-  auto it = s.begin();
-  //迭代
-  for(it = s.begin(); it != s.end(); it++){
-      //注意，在set中的迭代器其实是一个指针，如果我们想要得到set中的值，解引用即可
-  }
-  ```
 
 #### [216. 组合总和 III](https://leetcode-cn.com/problems/combination-sum-iii/)
 
 ```c++
 vector<vector<int>> res;
-    vector<int> temp;
-    vector<vector<int>> combinationSum3(int k, int n) {
-        vector<int> num = {1,2,3,4,5,6,7,8,9};
-        back_tracing(num, n ,k ,0, 0);
-        return res;
-    }
+vector<int> temp;
+vector<vector<int>> combinationSum3(int k, int n) {
+    vector<int> num = {1,2,3,4,5,6,7,8,9};
+    back_tracing(num, n ,k ,0, 0);
+    return res;
+}
 
-    void back_tracing(vector<int>& num, int n, int k, int sum, int start){
-        if(temp.size() == k && sum == n){
-            res.push_back(temp);
-            return;
-        }
-        else if(sum > n){
-            return;
-        }
-        for(int i = start; i < num.size(); i++){
-            temp.push_back(num[i]);
-            sum += num[i];
-            back_tracing(num, n, k, sum, i+1);
-            sum -= num[i];
-            temp.pop_back();
-        }
+void back_tracing(vector<int>& num, int n, int k, int sum, int start){
+    if(temp.size() == k && sum == n){
+        res.push_back(temp);
+        return;
     }
+    else if(sum > n){
+        return;
+    }
+    for(int i = start; i < num.size(); i++){
+        temp.push_back(num[i]);
+        sum += num[i];
+        back_tracing(num, n, k, sum, i+1);
+        sum -= num[i];
+        temp.pop_back();
+    }
+}
 ```
 
-跟40题很相似，基本一样
+跟40题很相似，基本一样，但是已经排好序了没有重复，所以不用考虑重复的问题。
 
 ### **分割问题**
 
@@ -5045,38 +5086,50 @@ vector<vector<int>> res;
 这道题的思路不要太简单，主要有两个点：一个函数用来判断是否是回文，一个用来分割字符串。
 
 ```c++
-	vector<vector<string>> res;
-    vector<string> temp;
-    vector<vector<string>> partition(string s) {
-        back_tracing(s, 0);
-        return res;
+vector<string> tmp;
+vector<vector<string>> res;
+vector<vector<string>> partition(string s) {
+    int len = s.size();
+    back_tracing(s, len, 0);
+    return res;
+
+}
+
+void back_tracing(string s, int len, int start){
+    if(start >= len){
+        res.push_back(tmp);
+        return;
     }
-    void back_tracing(const string& s, int start){
-        if(start >= s.size()){
-            res.push_back(temp);
-            return;
+    for(int i = start; i < len; i++){
+        string tmp_str = s.substr(start, i-start+1);
+        if(is_palindrome(tmp_str)){
+            tmp.push_back(tmp_str);
+        }else{
+            //重要！！！
+            continue;
         }
-        for(int i = start; i < s.size(); i++ ){
-            if(is_circle(s, start, i)){
-                temp.push_back(s.substr(start, i - start +1));
-            }else{
-                continue;
-            }
-            back_tracing(s, i+1);
-            temp.pop_back();
-        }
+        back_tracing(s, len, i+1);
+        tmp.pop_back();
     }
-    //注意，这个是字符串判断回文
-    bool is_circle(const string& s, int start, int end){
-        while(start < end){
-            if(s[start] != s[end]){
-                return false;
-            }
-            start++;
-            end--;
-        }
+}
+
+bool is_palindrome(string& str){
+    int len = str.size();
+    if(len == 1){
         return true;
     }
+    int l = 0;
+    int r = len - 1;
+    while(l < r){
+        if(str[l] == str[r]){
+            l++;
+            r--;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}
 ```
 
 - 涉及到的知识
@@ -5091,65 +5144,52 @@ vector<vector<int>> res;
 
       同时这个count是长度，所以在代码中表现为`i - start +1`。
 
-#### [93. 复原 IP 地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
+#### (字节)[93. 复原 IP 地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
 
-> 这个题他妈的写了老子一天的时间，吐了。下面说一下这道题的思路：
->
 > 跟上题分割回文串一样的思路，我们先分割字符串。但是ip地址一共有四个段，所以我们的temp数组只要存储有四段string字符串就可以开始判断，如果满足ip地址的要求就加入，不满足就return；
 
 ```c++
-	vector<string> res;
-    vector<string> vec;
-    vector<string> restoreIpAddresses(string s) {
-        if(s.size() > 13){
-            return res;
+vector<string> res;
+vector<string> tmp;
+vector<string> restoreIpAddresses(string s) {
+    int len = s.size();
+    back_tracing(s, len, 0);
+    return res;
+}
+void back_tracing(string s, int len, int start){
+    if(start == len && tmp.size() == 4){
+        string str_ip = tmp[0];
+        for(int i = 1; i < 4; i++){
+            str_ip  = str_ip + "." + tmp[i];
         }
-        back_tracing(s, 0);
-        return res;
+        res.push_back(str_ip);
+        return;
     }
-
-    string temp;
-    void back_tracing(const string& s, int start){
-        if(vec.size() == 3 &&  start < s.size()){
-            string last = s.substr(start, s.size() -1);
-            if(is_suit(last)){
-                string str = vec[0];
-                for(int i=1;i<3;i++){
-                    str +=  "." + vec[i];
-                }
-                str += "." + last;
-                res.push_back(str);
-                return;
-            }
-        }
-        for(int i = start; i < s.size(); i++){
-            temp = s.substr(start, i - start + 1);
-            if(!is_suit(temp)){
-                break;
-            }
-            vec.push_back(temp);
-            back_tracing(s, i+1);
-            vec.pop_back();
-        }
-        
+    if(start < len && tmp.size() == 4){
+        return;
     }
-    bool is_suit(const string& s){
-        if(s[0] == '0' && s.size() > 1){
-            return false;
+    for(int i = start; i < len; i++){
+        //分割子串，这里是重点！！！
+        string str_tmp = s.substr(start , i - start + 1);
+        if(!jarge(str_tmp)){
+            break;
         }
-        if(s.size() >= 10){
-            return false;
-        }else{
-            int a = stoi(s);
-            if(a > 255){
-                return false;
-            }
-            else if(a < 0){
-                return false;
-            }
-        }
-        return true;
+        cout<<"str_tmp"<<str_tmp<<endl;
+        tmp.push_back(str_tmp);
+        back_tracing(s, len, i+1);
+        tmp.pop_back();
     }
+}
+bool jarge(string s){
+    if(s.size() > 1 && s[0] == '0'){
+        return false;
+    }
+    int a = atoi(s.c_str());
+    if(a > 255){
+        return false;
+    }
+    return true;
+}
 ```
 
 - 存在的问题
@@ -5177,7 +5217,7 @@ vector<vector<int>> res;
 
 同样不能出现重复，因此for循环从start开始
 
-<img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210818130700.png" alt="图片" style="zoom: 67%;" />
+<img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210818130700.png" alt="图片" style="zoom: 67%;float:left" />
 
 ```c++
 vector<vector<int>> res;
@@ -5240,7 +5280,7 @@ vector<vector<int>> res;
 
      不加use_check数组的话，对于同一层元素，如果有重复我们就是不能用它，如下图：
 
-     <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210818134850.webp" alt="图片" style="zoom:50%;" />
+     <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210818134850.webp" alt="图片" style="zoom: 67%; float: left;" />
 
      对于同一树枝来说，第三层得自己[1 ,2]，第四层的[1, 2, 2]如果不加use_check数组，肯定得不到122这个数组,当if判断的时候就跳过了，但我们还要用到2，所以上述代码不合适。
 
@@ -5260,7 +5300,7 @@ vector<vector<int>> res;
 
      而我们要对同一树层使用过的元素进行跳过。
 
-### **棋盘问题**
+### 游戏问题
 
 #### [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
 
@@ -5311,9 +5351,228 @@ vector<vector<int>> res;
 ```
 
 - c++知识点
-  - `vector<string> chess(n, string(n, '.'))`这是一种
+  - `vector<string> chess(n, string(n, '.'))`这是初始化的一种
+  
+    即string(n, '.')这种形式
 
 #### [37. 解数独](https://leetcode-cn.com/problems/sudoku-solver/)
+
+N皇后问题是因为每一行每一列只放一个皇后，只需要一层for循环遍历一行，递归来来遍历列，然后一行一列确定皇后的唯一位置。
+
+本题就不一样了，本题中棋盘的每一个位置都要放一个数字，并检查数字是否合法，解数独的树形结构要比N皇后更宽更深。
+
+在树形图中可以看出我们需要的是一个二维的递归（也就是两个for循环嵌套着递归）
+
+一个for循环遍历棋盘的行，一个for循环遍历棋盘的列，一行一列确定下来之后，递归遍历这个位置放9个数字的可能性！
+
+解数独可以说是非常难的题目了，如果还一直停留在单层递归的逻辑中，这道题目可以让大家瞬间崩溃。
+
+所以我在开篇就提到了**二维递归**，这也是我自创词汇，希望可以帮助大家理解解数独的搜索过程。
+
+一波分析之后，在看代码会发现其实也不难，唯一难点就是理解二维递归的思维逻辑。
+
+```c++
+void solveSudoku(vector<vector<char>>& board) {
+    back_tracing(board);
+    return;
+}
+bool back_tracing(vector<vector<char>>& board){
+    for(int row = 0; row < 9; row++){           //遍历行
+        for(int col = 0; col < 9; col++){       //遍历列
+            if(board[row][col] != '.'){
+                continue;
+            }
+            for(char k = '1'; k <= '9'; k++){   //每个位置都有9种可能
+                if(!is_suit(board, col, row, k)){
+                    continue;
+                }
+                board[row][col] = k;
+                if(back_tracing(board)){   //如果找到合适一组立刻返回
+                    return true;
+                }
+                board[row][col] = '.';
+            }
+            return false;                   // 表示9个数都试完了，都不行，那么就返回false
+        }
+    }
+    return true;
+}
+bool is_suit(vector<vector<char>>& board, int col, int row, char k){
+    //判断行
+    for(int i = 0; i < 9; i++){
+        if(board[row][i] == k){
+            return false;
+        }
+    }
+    //判断列
+    for(int i = 0; i < 9; i++){
+        if(board[i][col] == k){
+            return false;
+        }
+    }
+    //判断9宫格
+    //要找到在第几个9宫格中
+    int start_row = (row / 3) * 3; //起始row
+    int start_col = (col / 3) * 3;  //起始col
+    for(int i = start_row; i < start_row + 3; i++){
+        for(int j = start_col; j < start_col + 3; j++){
+            if(board[i][j] == k){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+```
+
+#### [529. 扫雷游戏](https://leetcode-cn.com/problems/minesweeper/)
+
+需要再写一遍，阿里笔试出现过，第一次写不太会，要多看看
+
+> 这道题的意思是就点击一次，然后看看点击一次后棋盘是什么样子的。
+>
+> 为啥会用dfs呢，因为当你挖出的不是雷后，要判断挖出的这个地方周围是否有雷，如果挖出的这个地方的四周(上下左右对角八个方向)有，则显示对应的地雷数目，如果是0则，就需要将该块改成B，并递归的处理其周围的八个块，所以需要用递归哦，这个是重点
+
+```c++
+vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+    int x = click[0];
+    int y = click[1];
+    dfs(board, x, y);
+    return board;
+}
+void dfs(vector<vector<char>>& board, int x, int y){
+    //表示点击到了一个地雷
+    if(board[x][y] == 'M'){
+        board[x][y] = 'X';
+        return;
+    }
+
+    //如果不是地雷，判断挖开的地方周围有几个地雷
+    int mine_num = get_mine(board, x, y);
+    //挖开的这个块周边有地雷，则显示地雷数
+    if(mine_num > 0){
+        board[x][y] = mine_num + '0';
+    }
+    //周围都没有地雷，需要把该块周围的八个块都遍历一遍
+    else if(mine_num == 0){
+        board[x][y] = 'B';
+        //上
+        if((x-1) >=0 && board[x-1][y] == 'E'){
+            dfs(board, x-1, y);
+        }
+        //下
+        if((x+1) <= board.size() - 1 && board[x+1][y] == 'E'){
+            dfs(board, x+1, y);
+        }
+        //左
+        if((y-1) >= 0 && board[x][y-1] == 'E'){
+            dfs(board, x, y-1);
+        }
+        //右
+        if((y+1) <= board[0].size() - 1 && board[x][y+1] == 'E'){
+            dfs(board, x, y+1);
+        }
+        //左上
+        if((x-1) >= 0 && (y-1) >= 0 && board[x-1][y-1] == 'E'){
+            dfs(board, x-1, y-1);
+        }
+        //左下
+        if((x+1) <= board.size() - 1 && (y-1) >= 0 && board[x+1][y-1] == 'E'){
+            dfs(board, x+1, y-1);
+        }
+        //右上
+        if((x-1) >= 0 && (y+1) <= board[0].size() - 1 && board[x-1][y+1] == 'E'){
+            dfs(board, x-1, y+1);
+        }
+        //右下
+        if((x+1) <= board.size() - 1 && (y+1) <= board[0].size() - 1 && board[x+1][y+1] == 'E'){
+            dfs(board, x+1, y+1);
+        }
+    }
+
+}
+
+int get_mine(vector<vector<char>>& board, int x, int y){
+    int count = 0;
+    //上
+    if((x-1) >=0 && board[x-1][y] == 'M'){
+        count++;
+    }
+    //下
+    if((x+1) <= board.size() - 1 && board[x+1][y] == 'M'){
+        count++;
+    }
+    //左
+    if((y-1) >= 0 && board[x][y-1] == 'M'){
+        count++;
+    }
+    //右
+    if((y+1) <= board[0].size() - 1 && board[x][y+1] == 'M'){
+        count++;
+    }
+    //左上
+    if((x-1) >= 0 && (y-1) >= 0 && board[x-1][y-1] == 'M'){
+        count++;
+    }
+    //左下
+    if((x+1) <= board.size() - 1 && (y-1) >= 0 && board[x+1][y-1] == 'M'){
+        count++;
+    }
+    //右上
+    if((x-1) >= 0 && (y+1) <= board[0].size() - 1 && board[x-1][y+1] == 'M'){
+        count++;
+    }
+    //右下
+    if((x+1) <= board.size() - 1 && (y+1) <= board[0].size() - 1 && board[x+1][y+1] == 'M'){
+        count++;
+    }
+    return count;
+}
+```
+
+
+
+#### [488. 祖玛游戏](https://leetcode-cn.com/problems/zuma-game/)
+
+挺难的，没时间写了
+
+### Flood Fill
+
+#### [733. 图像渲染（Flood Fill，中等）](https://leetcode-cn.com/problems/flood-fill/)
+
+#### [130. 被围绕的区域（中等）](https://leetcode-cn.com/problems/surrounded-regions/)
+
+#### [79. 单词搜索（中等）](https://leetcode-cn.com/problems/word-search/)
+
+
+
+### 岛屿问题
+
+#### [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+
+#### [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
+
+#### [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)
+
+#### [1905. 统计子岛屿](https://leetcode-cn.com/problems/count-sub-islands/)
+
+#### [130. 被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
+
+#### [417. 太平洋大西洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
+
+### 字符串中的回溯问题
+
+#### [17. 电话号码的字母组合（中等）](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)，[题解](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/solution/hui-su-sou-suo-wu-xian-shi-hui-su-yan-du-you-xian-/)；
+
+#### [784. 字母大小写全排列（中等）](https://leetcode-cn.com/problems/letter-case-permutation/)；
+
+#### [22. 括号生成（中等）](https://leetcode-cn.com/problems/generate-parentheses/) 
+
+这道题广度优先遍历也很好写，可以通过这个问题理解一下为什么回溯算法都是深度优先遍历，并且都用递归来写。
+
+
+
+
 
 ## 二分查找
 
@@ -5483,7 +5742,7 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 
 ## 快慢指针
 
-#### [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/)
+### [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/)
 
 - 思路
 
@@ -5742,13 +6001,29 @@ vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
 
 
 
-+++
+## [292. Nim 游戏](https://leetcode.cn/problems/nim-game/)
+
+4为胜负手，到最后先手和后手必有一方获胜。n为4的倍数时先手必输。
+
+```c++
+bool canWinNim(int n) {
+    return n % 4 != 0;
+}
+```
 
 
 
-# 面试笔试题
+## [877. 石子游戏](https://leetcode.cn/problems/stone-game/)
 
-## 1
+```c++
+bool stoneGame(vector<int>& piles) {
+	return true;
+}
+```
+
+
+
+## 环分成连续的两部分
 
 小易有 n个数字排成一个环，你能否将它们分成连续的两个部分(即在环上必须连续)，使得两部分的和相等？
 
@@ -5795,8 +6070,5 @@ int main(){
 
 ```
 
-## 2
 
-第一题的进阶，两个连续数组差最小
 
-跟上一题一样，滑动窗口就行，主要是i和j的移动要依赖与维护的最小值min

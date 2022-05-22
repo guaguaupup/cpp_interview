@@ -2,11 +2,37 @@
 
 ## c++三大特性
 
-**封装可以隐藏实现细节包括包含私有成员，使得代码模块增加安全指数；**
+**封装**
 
-**继承可以扩展已存在的模块，为了增加代码的复用性；**
+封装就是将抽象得到的数据和行为相结合，形成一个有机的整体，也就是将数据与操作数据的源代码进行有机的结合，形成类，其中数据和函数都是类的成员，目的在于将对象的使用者和设计者分开，可以隐藏实现细节包括包含私有成员，使得代码模块增加安全指数，同时提高软件的可维护性和可修改性。
 
-**多态则是为了保证类在继承和派生的时候，类的实例被正确调用，实现了接口的重用**
+所以总结来说封装这个特性包含两三特点：
+
+1. 结合性，即是将属性和方法结合 
+2. 信息隐蔽性，利用接口机制隐蔽内部实现细节，只留下接口给外界调用   
+3. 实现代码重用
+
+**继承**
+
+类的派生指的是从已有类产生新类的过程。原有的类成为基类或父类，产生的新类称为派生类或子类，子类继承基类后，可以创建子类对象来调用基类的函数，变量等。
+
+一般来说有如下三种继承方式：
+
+1. 单一继承：继承一个父类，这种继承称为单一继承，这也是我们用的做多的继承方式。
+2. 多重继承：一个派生类继承多个基类，类与类之间要用逗号隔开，类名之前要有继承权限，假使两个或两个基类都有某变量或函数，在子类中调用时需要加**类名限定符**如obj.classA::i = 1；
+3. 菱形继承：多重继承掺杂隔代继承1-n-1模式，此时需要用到虚继承，例如 B，C虚拟继承于A，D再多重继承B，C，否则会出错。后面有将具体虚继承怎么做。
+
+此外还有继承权限的问题，如下图：
+
+<img src="https://images2015.cnblogs.com/blog/1048430/201611/1048430-20161107095657280-1519112029.png" alt="img" style="float: left;" />
+
+**多态**
+
+可以简单概括为“一个接口，多种方法”，即用的是同一个接口，但是效果各不相同，多态有两种形式的多态，一种是静态多态，一种是动态多态。
+
+静态多态。静态多态的设计思想：对于相关的对象类型，直接实现它们各自的定义，不需要共有基类，甚至可以没有任何关系。只需要各个具体类的实现中要求相同的接口声明，静态多态本质上就是模板的具现化。
+
+动态多态。对于相关的对象类型，确定它们之间的一个共同功能集，然后在基类中，把这些共同的功能声明为多个公共的虚函数接口。各个子类重写这些虚函数，以完成具体的功能。具体实现就是c++的虚函数。
 
 
 
@@ -1141,7 +1167,7 @@ A *a = new A;
 
 
 
-## C++11新特性
+##   :watermelon:C++11新特性
 
 [参考链接](https://subingwen.cn/cplusplus/)
 
@@ -1192,6 +1218,8 @@ auto和decltype都是c++11新增的关键字，都用于自动类型推到，但
 
 ### c++智能指针
 
+https://aijishu.com/a/1060000000286819
+
 > 智能指针是一个`RAII`（`Resource Acquisition is initialization`）类模型，用来动态的分配内存。
 >
 > 把指针用类封装然后实例化成对象，在对象过期的时候，让析构函数删除指向的内存
@@ -1217,50 +1245,208 @@ auto和decltype都是c++11新增的关键字，都用于自动类型推到，但
 
 #### shared_ptr
 
+**概述**
+
 共享所有权，也就是说多个指针可以指向一个相同的对象，当最后一个shared_ptr离开作用域的时候才会释放掉内存。
 
-在shared_ptr内部有一个共享引用计数器来自动管理，计数器实际上就是指向该资源指针的个数，每当复制一个 shared_ptr，引用计数会 + 1。当一个 shared_ptr 离开作用域时，引用计数会 - 1，当引用计数为 0 的时候，则 delete 内存。这样相比auto来说就好很多，当计数器为0的时候指针才会彻底释放掉这个资源。
+实现原理：在shared_ptr内部有一个共享引用计数器来自动管理，计数器实际上就是指向该资源指针的个数，每当复制一个 shared_ptr，引用计数会 + 1。当一个 shared_ptr 离开作用域时，引用计数会 - 1，当引用计数为 0 的时候，则delete 内存。这样相比auto来说就好很多，当计数器为0的时候指针才会彻底释放掉这个资源。
 
 **线程安全问题？**
 
 [参考，有时间总结一下](https://www.zhihu.com/question/56836057)
 
-shared_ptr 的引用计数是原子操作的。std::shared_ptr只有两个指针数据成员，sizeof(std::shared_ptr)=16，一个是Ptr裸指针在x64上是8字节，另外一个是`_Ref_count_base`对象的指针是8字节。两个加起来16字节。该对象有两个成员`_Uses`和`_Weaks`。这个对象是在std::make_shared时候创建的，可以在源码中查看到。所以算是考虑shared_ptr和_Ref_count_base两个对象在内存中是否线程安全。
+> Boost 文档对于 shared_ptr 的线程安全有一段专门的记述，内容如下：
+>
+> shared_ptr objects offer the same level of thread safety as built-in types. 
+>
+> A shared_ptr instance can be "read" (accessed using only const operations) simultaneously by multiple threads. 一个 shared_ptr 实例可以同时被多个线程“读”（仅使用不变操作进行访问）
+>
+> Different shared_ptr instances can be "written to" (accessed using mutable operations such as operator= or reset) simultaneosly by multiple threads (even when these instances are copies, and share the same reference count underneath.)Any other simultaneous accesses result in undefined behavior.不同的 shared_ptr 实例可以同时被多个线程“写入”（使用类似 operator= 或 reset 这样的可变操作进行访问）（即使这些实
+> 例是拷贝，而且共享下层的引用计数）。
+> 任何其它的同时访问的结果会导致未定义行为。”
+>
+> 总结：1、同一个shared_ptr被多个线程“读”是安全的。2、同一个shared_ptr被多个线程“写”是不安全的。3、共享引用计数的不同的shared_ptr被多个线程”写“ 是安全的。
 
-虽然本身引用计数是原子操作，但是看资料说很多线程之间的操作，这一过程中的data race还是会造成问题。比如多线程读写同一个shared_ptr可能会读到一个错误的信息（写线程刚刚写入一个成员然后读线程就开始读取，读到了一半旧一半新值）。解决方案之一就是加锁。所以甭管安全不安全，加锁就完事儿了。
+看线程安全问题之前最好还是要看一下源码解析。
 
-**reset方法**
+shared_ptr 可能的线程安全隐患大概有如下几种，一是引用计数的加减操作是否线程安全，二是shared_ptr修改指向时，是否线程安全。
 
-[参考](https://blog.csdn.net/boiled_water123/article/details/101194033)
+1. shared_ptr 的引用计数是原子操作的，所以引用计数的加减是线程安全的。
 
-[参考](https://blog.csdn.net/ff_gogo/article/details/123512482?spm=1001.2101.3001.6650.6&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-6.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-6.pc_relevant_default&utm_relevant_index=13)
+2. shared_ptr修改指针指向的时候会不安全。 同一个shared_ptr被多个线程“读”是安全的。同一个shared_ptr被多个线程“写”是不安全的(多个线程操作同一个shared_ptr对象)。如下面的代码：
 
-[参考](https://en.cppreference.com/w/cpp/memory/shared_ptr/reset)
+   ```c++
+   void fn(shared_ptr<A>& sp) {
+       ...
+       if (..) {
+           sp = other_sp;
+       } else if (...) {
+           sp = other_sp2;
+       }
+   }
+   ```
 
-**make_shared方法**
+   当你在多线程回调中修改shared_ptr指向的时候。shared_ptr内数据指针要修改指向，sp原先指向的引用计数的值要减去1，other_sp指向的引用计数值要加1。然而这几步操作加起来并不是一个原子操作，如果多少线程都在修改sp的指向的时候，那么有可能会出问题。比如在导致计数在操作减一的时候，其内部的指向，已经被其他线程修改过了。引用计数的异常会导致某个管理的对象被提前析构，后续在使用到该数据的时候触发core dump。当然如果你没有修改指向的时候，是没有问题的。
+   
+   测试：在多个线程中同时对一个shared_ptr循环执行两遍swap。
+   shared_ptr的swap函数的作用就是和另外一个shared_ptr交换引用对象和引用计数，是写操作。执行两遍swap之后,
+   shared_ptr引用的对象的值应该不变。
+   
+   ```c++
+   #include <stdio.h>
+   #include <tr1/memory>
+   #include <pthread.h>
+   
+   using std::tr1::shared_ptr;
+   
+   shared_ptr<int> gp(new int(2000));
+   
+   //多线程操作不同的shared_ptr对象，安全
+   //该函数拷贝了一个p1，用p1进行操作
+   shared_ptr<int>  CostaSwapSharedPtr1(shared_ptr<int> & p)
+   {
+       shared_ptr<int> p1(p);
+       shared_ptr<int> p2(new int(1000));
+       p1.swap(p2);
+       p2.swap(p1);
+       return p1;
+   }
+   
+   //多线程操作指向同一个shared_ptr对象，不安全
+   //直接对全局变量gp进行操作
+   shared_ptr<int>  CostaSwapSharedPtr2(shared_ptr<int> & p)
+   {
+       shared_ptr<int> p2(new int(1000));
+       p.swap(p2);
+       p2.swap(p);
+       return p;
+   }
+   
+   //线程执行函数
+   void* thread_start(void * arg)
+   {
+       int i =0;
+       for(;i<100000;i++)
+       {
+           shared_ptr<int> p= CostaSwapSharedPtr2(gp);
+           if(*p!=2000)
+           {
+               printf("Thread error. *gp=%d \n", *gp);
+               break;
+           }
+       }
+       printf("Thread quit \n");
+       return 0;
+   }
+   
+   int main()
+   {
+       pthread_t thread;
+       int thread_num = 10, i=0;
+       pthread_t* threads = new pthread_t[thread_num];
+       for(;i<thread_num;i++)
+           pthread_create(&threads[i], 0 , thread_start , &i);
+       for(i=0;i<thread_num;i++)
+           pthread_join(threads[i],0);
+       delete[] threads;
+       return 0;
+   }
+   ```
+   
+   解决方案之一就是加锁。所以甭管安全不安全，加锁就完事儿了。
 
-**swap方法**
+**所管理数据的线程安全性**
 
-**shared_from_this**
+我们上面说的是针对shared_ptr本身的线程安全问题。但是用shared_ptr管理对象的线程安全问题又是另一会儿事。
 
-我们往往会需要在类内部使用自身的 shared_ptr，如下代码：
+如果shared_ptr管理的数据是STL容器，那么多线程如果存在同时修改的情况，是极有可能触发core dump的。比如多个线程中对同一个vector进行push_back，或者对同一个map进行了insert。甚至是对STL容器中并发的做clear操作，都有可能出发core dump，当然这里的线程不安全性，其实是其所指向数据的类型的线程不安全导致的，并非是shared_ptr本身的线程安全性导致的。尽管如此，由于shared_ptr使用上的特殊性，所以我们有时也要将其纳入到shared_ptr相关的线程安全问题的讨论范围内。
 
-```c++
-class Widget
-{
-public:
-    void do_something(A& a)
-    {
-        a.widget = 该对象的 shared_ptr;
-    }
-}
-```
+**拥有的一些方法**
 
-上述代码是说我们将当前对象的sp交由对象a管理，那就意味着当前对象的生命周期的结束不能早于对象 a。因为对象 a 在析构之前还是有可能会使用到 `a.widget`。如果我们直接 `a.widget = this;`那肯定不行， 因为这样并没有增加当前 shared_ptr 的引用计数。shared_ptr 还是有可能早于对象 a 释放。如果我们使用 `a.widget = std::make_shared<Widget>(this);`，肯定也不行，因为这个新创建的 shared_ptr，跟当前对象的 shared_ptr 毫无关系。当前对象的 shared_ptr 生命周期结束后，依然会释放掉当前内存，那么之后 `a.widget` 依然是不合法的。对于这种，需要在对象内部获取该对象自身的 shared_ptr, 那么该类必须继承 `std::enable_shared_from_this<T>`。
+1. reset方法
+
+   reset() 释放并销毁原生指针。如果参数为一个新指针，将管理这个新指针
+
+   ”当智能指针调用了reset函数的时候,就不会再指向这个对象了,所以如果还有其它智能指针指向这个对象,那么其他的智能指针的引用计数会减1
+
+   [cppreference参考](https://en.cppreference.com/w/cpp/memory/shared_ptr/reset)
+
+2. make_shared方法
+
+   返回一个指定类型的 std::shared_ptr，和shared_ptr的构造函数一样都是用来初始化一个智能指针对象的。但是效率上有所不同：
+
+   > make_shared执行一次堆分配，而shared_ptr构造函数执行两次
+
+   读过源码的应该都知道，stared_ptr里面维护了两个部分，或者叫两个控制块：
+
+   - 引用计数相关控制块，添加删除等等
+   - 被管理的对象，原生指针
+
+   如果使用new即自身构造函数来分配内存的话，就会对于上面两部分执行heap-allocation，即两次堆分配，如下图：
+
+   <img src="C:\Users\ACER\AppData\Roaming\Typora\typora-user-images\image-20220514103558156.png" alt="image" style="float: left;" />
+
+   但是如果使用make_shared的话，只用执行一次heap_allocation，如下图：
+
+   <img src="C:\Users\ACER\AppData\Roaming\Typora\typora-user-images\image-20220514104204749.png" alt="image" style="float: left;" />
+
+   **其次使用make_shared还是异常安全的**
+
+   在c++17之后就不是问题了，因为函数的求职顺序发生了变化，函数的每个参数都需要在计算其他参数之前完全执行
+
+   比如下面代码：
+
+   ```c++
+    //潜在的资源泄露 
+   processWidget(std::shared_ptr<Widget>(new Widget),computePriority());
+   ```
+
+   在运行期，函数的参数必须在函数被调用前被估值，所以在调用processWidget时，下面的事情肯定发生在processWidget能开始执行之前：
+
+   1、表达式`new Widget`必须被估值即一个Widget必须被创建在堆上。2、std::shared_ptr（负责管理由new创建的指针）的构造函数必须被执行。
+   3、computePriority必须跑完。
+   编译器不需要必须产生这样顺序的代码。**但`new Widget`必须在std::shared_ptr的构造函数被调用前执行**，因为new的结构被用为构造函数的参数，但是computePriority可能在这两个调用前（后，或很奇怪地，中间）被执行。也就是，编译器可能产生出这样顺序的代码：
+
+   ```cpp
+   执行“new Widget”。
+   执行computePriority。
+   执行std::shared_ptr的构造函数。
+   ```
+
+   如果computePriority产生了一个异常，则在第一步动态分配的Widget就会泄露了，因为它永远不会被存放到在第三步才开始管理它的std::shared_ptr中。
+
+   使用std::make_shared可以避免这样的问题。
+
+3. swap方法
+
+   swap 交换两个 shared_ptr 对象(即交换所拥有的对象)
+
+4. shared_from_this
+
+   我们往往会需要在类内部使用自身的 shared_ptr，如下代码：
+
+   ```c++
+   class Widget
+   {
+   public:
+       void do_something(A& a)
+       {
+           a.widget = 该对象的 shared_ptr;
+       }
+   }
+   ```
+
+   上述代码是说我们将当前对象的sp交由对象a管理，那就意味着当前对象的生命周期的结束不能早于对象 a。因为对象 a 在析构之前还是有可能会使用到 `a.widget`。如果我们直接 `a.widget = this;`那肯定不行， 因为这样并没有增加当前 shared_ptr 的引用计数。shared_ptr 还是有可能早于对象 a 释放。如果我们使用 `a.widget = std::make_shared<Widget>(this);`，肯定也不行，因为这个新创建的 shared_ptr，跟当前对象的 shared_ptr 毫无关系。当前对象的 shared_ptr 生命周期结束后，依然会释放掉当前内存，那么之后 `a.widget` 依然是不合法的。对于这种，需要在对象内部获取该对象自身的 shared_ptr, 那么该类必须继承 `std::enable_shared_from_this<T>`。
+
+
 
 #### weak_ptr
 
-weak指针的出现是为了解决shared指针循环引用造成的内存泄漏的问题。如下述代码：
+`weak_ptr` 比较特殊，它主要是为了配合`shared_ptr`而存在的。就像它的名字一样，它本身是一个弱指针，因为它本身是不能直接调用原生指针的方法的。如果想要使用原生指针的方法，需要将其先转换为一个`shared_ptr`。那`weak_ptr`存在的意义到底是什么呢？
+
+weak指针的出现是为了解决shared指针循环引用造成的内存泄漏的问题。由于`shared_ptr`是通过引用计数来管理原生指针的，那么最大的问题就是循环引用（比如 a 对象持有 b 对象，b 对象持有 a 对象），这样必然会导致内存泄露(无法删除)。而`weak_ptr`不会增加引用计数，因此将循环引用的一方修改为弱引用，可以避免内存泄露。
+
+如下述代码：
 
 ```c++
 struct A{
@@ -1292,10 +1478,16 @@ pb->a = pa;
 
 weak_ptr 不会增加引用计数，因此可以打破 shared_ptr 的循环引用。
 
-
 当创建一个shared指针对象时候，该指针所指向的资源数为1，当用shared对象指针创建一个weak对象时候，资源计数器没有变化。weak_ptr的构造和析构并不会改变引用计数的大小，同时由于weak_ptr没有重载运算符*，->，因此他不操作资源，只是观测
 
-但有以下问题：
+**方法**
+
+1. expired() 判断所指向的原生指针是否被释放，如果被释放了返回 true，否则返回 false
+2. use_count() 返回原生指针的引用计数
+3. lock() 返回 shared_ptr，如果原生指针没有被释放，则返回一个非空的 shared_ptr，否则返回一个空的 shared_ptr
+4. reset() 将本身置空
+
+**有以下问题：**
 
 1. 要是用weak指针对象如何判断该指针指向的对象是否销毁？
 
@@ -1307,13 +1499,44 @@ weak_ptr 不会增加引用计数，因此可以打破 shared_ptr 的循环引�
 
 #### unique_ptr
 
-独占式智能指针，跟auto有点像
+`unique_ptr`的核心特点就如它的名字一样，它拥有对持有对象的唯一所有权。即两个`unique_ptr`不能同时指向同一个对象。
 
-但是unique_ptr没有拷贝语义和赋值语义，导致unique不能通过拷贝构造和赋值来转移资源所有权。
+那具体这个唯一所有权如何体现呢？
 
-如果想转移资源所有权，使用move
+1. `unique_ptr`不能被复制到另外一个`unique_ptr`
+2. `unique_ptr`所持有的对象只能通过转移语义将所有权转移到另外一个`unique_ptr`
 
-同时可以放在容器中，还可以管理数组
+```c++
+std::unique_ptr<A> a1(new A());
+std::unique_ptr<A> a2 = a1;//编译报错，不允许复制
+std::unique_ptr<A> a3 = std::move(a1);//可以转移所有权，所有权转义后a1不再拥有任何指针
+```
+
+**`unique_ptr`本身拥有的方法主要包括：**
+
+1. get() 获取其保存的原生指针，尽量不要使用
+2. bool() 判断是否拥有指针
+3. release() 释放所管理指针的所有权，返回原生指针。但并不销毁原生指针。
+4. reset() 释放并销毁原生指针。如果参数为一个新指针，将管理这个新指针
+
+```c++
+std::unique_ptr<A> a1(new A());
+A *origin_a = a1.get();//尽量不要暴露原生指针
+std::unique_ptr<A> a2(a1.release());//常见用法，转义拥有权
+a2.reset(new A());//释放并销毁原有对象，持有一个新对象
+a2.reset();//释放并销毁原有对象，等同于下面的写法
+a2 = nullptr;//释放并销毁原有对象
+```
+
+
+
+
+
+
+
+
+
+
 
 ### lambda用法
 
@@ -3102,7 +3325,52 @@ v.resize(1000);
 
 ## 线程池
 
+
+
+
+
 ## 内存池
+
+### 内存池概述
+
+我们在进行数据库操作的时候为了提高数据库（关系型数据库）的访问瓶颈，除了在服务器端增加缓存服务器（例如 redis）缓存常用的数据之外，还可以增加连接池，来提高数据库服务器的访问效率。一般来说，对于数据库操作都是在访问数据库的时候创建连接，访问完毕断开连接。但是如果在高并发情况下，有些需要频繁处理的操作就会消耗很多的资源和时间，比如：
+
+1. 建立通信连接的 TCP 三次握手
+2. 数据库服务器的连接认证
+   数
+3. 据库服务器关闭连接时的资源回收
+4. 断开通信连接的 TCP 四次挥手
+
+### 连接数据库的步骤
+
+MySQL 数据库是一个典型的 C/S 结构，即：客户端和服务器端。如果我们部署好了 MySQL 服务器，想要在客户端访问服务器端的数据，在编写程序的时候就可以通过官方提供的 C 语言的 API 来实现。
+
+在程序中连接 MySql 服务器，主要分为已经几个步骤：
+
+- 初始化连接环境
+
+- 连接 mysql 的服务器，需要提供如下连接数据:
+
+  1. 服务器的 IP 地址
+  2. 服务器监听的端口（默认端口是 3306）
+  3. 连接服务器使用的用户名（默认是 root），和这个用户对应的密码
+  4. 要操作的数据库的名字
+
+- 连接已经建立，后续操作就是对数据库数据的添删查改(调用API完成)
+
+- 如果要进行数据 添加 / 删除 / 更新，需要进行事务的处理需要对执行的结果进行判断
+
+  成功：提交事务
+
+  失败：数据回滚
+
+- 数据库的读操作 -> 查询 -> 得到结果集
+
+- 遍历结果集 -> 得到了要查询的数据
+
+- 释放资源
+
+
 
 ## 日志系统
 
