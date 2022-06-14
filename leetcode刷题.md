@@ -2010,178 +2010,21 @@ bool searchMatrix(vector<vector<int>>& matrix, int target) {
 
 #### [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/)
 
-- 思路
-
-#### [剑指 Offer 05. 替换空格](https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/)
-
-```c++
-string replaceSpace(string s) {
-    string res;
-    for(auto tmp : s){
-        if(tmp == ' '){
-            char tmp1 = '%';
-            res.push_back(tmp1);
-            char tmp2 = '2';
-            res.push_back(tmp2);
-            char tmp3 = '0';
-            res.push_back(tmp3);
-        }else{
-            res.push_back(tmp);
-        }
-    }
-    return res;
-}
-```
-
-#### [剑指 Offer 58 - II. 左旋转字符串](https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
-
-- 思路一，用一个新空间
-
-  ```c++
-  string reverseLeftWords(string s, int n) {
-      int len = s.size();
-      if(len <= 1){
-          return s;
-      }
-      string res(len, '\0');
-      int i = n;
-      int j = 0;
-      while(i < len){
-          res[j] = s[i];
-          i++;
-          j++;
-      }
-      i = 0;
-      j = len - n;
-      while(i < n){
-          res[j] = s[i];
-          i++;
-          j++;
-      }
-      return res;
-  }
-  ```
-
-- 思路二：将前n个放到后面，删除前n个就行
-
-  ```c++
-  string reverseLeftWords(string s, int n) {
-      int len_orignal = s.size();
-      for(int i = 0; i < n; i++){
-          s.push_back(s[i]);
-      }
-      int len = s.size();
-      for(int i = 0; i < len - n; i++){
-          s[i] = s[i+n];
-      }
-      for(int i = len_orignal; i < len ;i++){
-          s[i] = '\0';
-      }
-      return s;
-  }
-  ```
-
-  
-
-
-
-+++
-
-## 栈/队列
-
-#### [剑指 Offer 09. 用两个栈实现队列](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/)
-
-> 注意一点就，即s1栈有数据，s2栈有数据的时候，先停止将s1的数据往s2里面倒，先把s2的清空！
-
-```c++
-class CQueue {
-public:
-    stack<int> s1;
-    stack<int> s2;
-    CQueue() {
-        
-    }
-    
-    void appendTail(int value) {
-        s1.push(value);
-        return;
-    }
-    
-    int deleteHead() {
-        int tmp = 0;
-        if(!s2.empty()){
-            tmp = s2.top();
-            s2.pop();
-        }
-        else if(s2.empty() && !s1.empty()){
-            while(!s1.empty()){
-                s2.push(s1.top());
-                s1.pop();
-            }
-            tmp = s2.top();
-            s2.pop();
-        }else{
-            return -1;
-        }
-        return tmp;
-    }
-};
-```
-
-
-
-#### [剑指 Offer 30. 包含min函数的栈](https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/)
-
-> 还是得两个栈，一个辅助栈，一个记录数据的栈，辅助栈只记录pop的最小值就行了
-
-```c++
-public:
-    /** initialize your data structure here. */
-    stack<int> s1;
-    stack<int> s2;  //辅助栈
-
-    MinStack() {
-
-    }
-    
-    void push(int x) {
-        s1.push(x);
-        if(s2.empty()){
-            s2.push(x);
-        }else{
-            int tmp = s2.top() > x ? x : s2.top();
-            s2.push(tmp);
-        }
-    }
-    
-    void pop() {
-        if(!s1.empty() && !s2.empty()){
-            s1.pop();
-            s2.pop();
-        }
-    }
-    
-    int top() {
-        if(!s1.empty()){
-            return s1.top();
-        }else{
-            return 0;
-        }
-    }
-    
-    int min() {
-        return s2.top();    
-    }
-};
-```
-
 
 
 ## 并查集
 
 [参考](https://leetcode-cn.com/tag/union-find/problemset/)
 
-## 排序
+
+
+## 可以直接调用API的
+
+> 直接调用API来做题的主要由排序和堆，优先队列这类题目
+>
+> 没必要自己造轮子，完全没必要
+>
+> 所以这类中的题只是碰见了放进去
 
 ### [215. 数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)
 
@@ -5990,19 +5833,6 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 
 
 
-
-+++
-
-
-
-## 堆/优先队列
-
-先去看看我算法总结的堆的再来做题
-
-
-
-
-
 +++
 
 
@@ -6340,6 +6170,166 @@ int main(){
 
 
 # 剑指offer
+
+## [剑指 Offer 05. 替换空格](https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/)
+
+```c++
+string replaceSpace(string s) {
+    string res;
+    for(auto tmp : s){
+        if(tmp == ' '){
+            char tmp1 = '%';
+            res.push_back(tmp1);
+            char tmp2 = '2';
+            res.push_back(tmp2);
+            char tmp3 = '0';
+            res.push_back(tmp3);
+        }else{
+            res.push_back(tmp);
+        }
+    }
+    return res;
+}
+```
+
+## [剑指 Offer 58 - II. 左旋转字符串](https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
+
+- 思路一，用一个新空间
+
+  ```c++
+  string reverseLeftWords(string s, int n) {
+      int len = s.size();
+      if(len <= 1){
+          return s;
+      }
+      string res(len, '\0');
+      int i = n;
+      int j = 0;
+      while(i < len){
+          res[j] = s[i];
+          i++;
+          j++;
+      }
+      i = 0;
+      j = len - n;
+      while(i < n){
+          res[j] = s[i];
+          i++;
+          j++;
+      }
+      return res;
+  }
+  ```
+
+- 思路二：将前n个放到后面，删除前n个就行
+
+  ```c++
+  string reverseLeftWords(string s, int n) {
+      int len_orignal = s.size();
+      for(int i = 0; i < n; i++){
+          s.push_back(s[i]);
+      }
+      int len = s.size();
+      for(int i = 0; i < len - n; i++){
+          s[i] = s[i+n];
+      }
+      for(int i = len_orignal; i < len ;i++){
+          s[i] = '\0';
+      }
+      return s;
+  }
+  ```
+
+
+## [剑指 Offer 09. 用两个栈实现队列](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/)
+
+> 注意一点就，即s1栈有数据，s2栈有数据的时候，先停止将s1的数据往s2里面倒，先把s2的清空！
+
+```c++
+class CQueue {
+public:
+    stack<int> s1;
+    stack<int> s2;
+    CQueue() {
+        
+    }
+    
+    void appendTail(int value) {
+        s1.push(value);
+        return;
+    }
+    
+    int deleteHead() {
+        int tmp = 0;
+        if(!s2.empty()){
+            tmp = s2.top();
+            s2.pop();
+        }
+        else if(s2.empty() && !s1.empty()){
+            while(!s1.empty()){
+                s2.push(s1.top());
+                s1.pop();
+            }
+            tmp = s2.top();
+            s2.pop();
+        }else{
+            return -1;
+        }
+        return tmp;
+    }
+};
+```
+
+
+
+## [剑指 Offer 30. 包含min函数的栈](https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/)
+
+> 还是得两个栈，一个辅助栈，一个记录数据的栈，辅助栈只记录pop的最小值就行了
+
+```c++
+public:
+    /** initialize your data structure here. */
+    stack<int> s1;
+    stack<int> s2;  //辅助栈
+
+    MinStack() {
+
+    }
+    
+    void push(int x) {
+        s1.push(x);
+        if(s2.empty()){
+            s2.push(x);
+        }else{
+            int tmp = s2.top() > x ? x : s2.top();
+            s2.push(tmp);
+        }
+    }
+    
+    void pop() {
+        if(!s1.empty() && !s2.empty()){
+            s1.pop();
+            s2.pop();
+        }
+    }
+    
+    int top() {
+        if(!s1.empty()){
+            return s1.top();
+        }else{
+            return 0;
+        }
+    }
+    
+    int min() {
+        return s2.top();    
+    }
+};
+```
+
+
+
+
 
 # leetcode热题100
 
