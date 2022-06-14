@@ -4720,7 +4720,7 @@ int monotoneIncreasingDigits(int n) {
 
 
 
-## DFS（回溯算法）
+## DFS（回溯算法）（必须背熟）
 
 **需要经常的刷**
 
@@ -5302,7 +5302,7 @@ vector<vector<int>> res;
 
 ### 游戏问题
 
-#### [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
+#### [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)K
 
 > [参考链接](https://mp.weixin.qq.com/s?__biz=MzUxNjY5NTYxNA==&mid=2247485624&idx=1&sn=d560c3a277e1badedc0fa05b8effae87&chksm=f9a23be9ced5b2ffa30aca85df3836eac842f91fa4053a9c176fd9fff81b2b7db04d0d7b2d3a&scene=178&cur_album_id=1607983171550167042#rd)
 
@@ -5425,7 +5425,7 @@ bool is_suit(vector<vector<char>>& board, int col, int row, char k){
 }
 ```
 
-#### [529. 扫雷游戏](https://leetcode-cn.com/problems/minesweeper/)
+#### [529. 扫雷游戏](https://leetcode-cn.com/problems/minesweeper/)K
 
 需要再写一遍，阿里笔试出现过，第一次写不太会，要多看看
 
@@ -5538,27 +5538,294 @@ int get_mine(vector<vector<char>>& board, int x, int y){
 
 ### Flood Fill
 
+#### [79. 单词搜索（中等）](https://leetcode-cn.com/problems/word-search/)K
+
+又是笔试出现过的题目
+
+感觉这道题和扫雷那道题好像啊，但是只能从上下左右四个方向
+
+思路就是每一个都遍历一遍，board中的每一个都当做起始位置试一下
+
+```c++
+bool exist(vector<vector<char>>& board, string word) {
+    int row = board.size();
+    int col = board[0].size();
+    bool result = true;
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(dfs(board, word, i, j, 0)){
+                //只要有一个就直接返回
+                return true;
+            }
+        }
+    }
+    return false;
+}
+bool dfs(vector<vector<char>>& board, string word, int row, int col, int index){
+    //不匹配就不要浪费时间直接返回
+    if(board[row][col] != word[index]){
+        return false;
+    }
+    //遍历到word的最后一个后，说明都对了，返回
+    if(index == word.size() - 1){
+        return true;
+    }
+    //对于已经搜索过得标识一下，提高效率
+    char tmp = board[row][col];
+    board[row][col] = '#';
+    //上
+    if(row - 1 >= 0 && board[row - 1][col] != '#'){
+        if(dfs(board, word, row - 1, col, index + 1)){
+            return true;
+        }
+    }
+    //下
+    if(row + 1 <= board.size() - 1 && board[row + 1][col] != '#'){
+        if(dfs(board, word, row + 1, col, index + 1)){
+            return true;
+        }
+    }
+    //左
+    if(col - 1 >= 0 && board[row][col - 1] != '#'){
+        if(dfs(board, word, row, col - 1, index + 1)){
+            return true;
+        }
+    }
+    //右
+    if(col + 1 <= board[0].size() - 1 && board[row][col +1] != '#'){
+        if(dfs(board, word, row, col + 1, index + 1)){
+            return true;
+        }
+    }
+    board[row][col] = tmp;
+    return false;
+
+}
+```
+
+#### [130. 被围绕的区域（中等）](https://leetcode-cn.com/problems/surrounded-regions/)K
+
+这道题刚读到题目的时候我的思路是，不看边上的，就看中间的。如果是这样的思路的话，后面就错了
+
+因为本质上，如果四条边上出现O的话表示必定是不满足的，即不会被X包围。
+
+所以我们只需要看四条件上的O即可，但是有一种情况是一条边上的某个O和内部的O相连如下：
+
+```
+XXXXX
+XXOXX
+XXOOX
+XXXOX
+```
+
+上述这种情况下O是没有被X包围的，也会出现问题的。
+
+所以我们的思路应该是仅仅遍历边上的O，然后如果某个O有相邻的O的话就遍历下去
+
+对该点的上下左右点均进行领土扩张般的遍历 若满足条件则直接置'Y' 最终 棋盘格上除了'Y'以外的地方全部置'X'
+
+```c++
+void solve(vector<vector<char>>& board) {
+    int row = board.size();
+    int col = board[0].size();
+    for(int i = 0; i < col; i++){
+        dfs(board, 0, i);
+    }
+    for(int i = 0; i < col; i++){
+        dfs(board, row - 1, i);
+    }
+    for(int i = 0; i < row; i++){
+        dfs(board, i, 0);
+    }
+    for(int i = 0; i < row; i++){
+        dfs(board, i, col - 1);
+    }
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(board[i][j] != '#'){
+                board[i][j] = 'X';
+            }
+        }
+    }
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(board[i][j] == '#'){
+                board[i][j] = 'O';
+            }
+        }
+    }
+}
+
+void dfs(vector<vector<char>>& board, int row, int col){
+    if(board[row][col] == 'X'){
+        return;
+    }
+    board[row][col] = '#';
+    //上
+    if(row - 1 >= 0 && board[row - 1][col] == 'O'){
+        dfs(board, row - 1, col);
+    }
+    //下
+    if(row + 1 < board.size() && board[row + 1][col] == 'O'){
+        dfs(board, row + 1, col);
+    }
+    //左
+    if(col - 1 >= 0 && board[row][col - 1] == 'O'){
+        dfs(board, row, col - 1);
+    }
+    //右
+    if(col + 1 < board[0].size() && board[row ][col + 1] == 'O'){
+        dfs(board, row, col + 1);
+    }
+}
+```
+
 #### [733. 图像渲染（Flood Fill，中等）](https://leetcode-cn.com/problems/flood-fill/)
 
-#### [130. 被围绕的区域（中等）](https://leetcode-cn.com/problems/surrounded-regions/)
+```c++
+vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+    int row = image.size();
+    int col = image[0].size();
+    int flag = image[sr][sc];
+    if(image[sr][sc] == newColor){
+        return image;
+    }
+    dfs(image, sr, sc, newColor, flag);
+    return image;
+}
+void dfs(vector<vector<int>>& image, int row, int col, int newColor, int flag){
+    image[row][col] = newColor;
+    //上
+    if(row - 1 >= 0 && image[row-1][col] == flag){
+        dfs(image, row - 1, col, newColor, flag);
+    }
+    //下
+    if(row + 1 <= image.size() - 1 && image[row+1][col] == flag){
+        dfs(image, row + 1, col, newColor, flag);
+    }
+    //左
+    if(col - 1 >= 0 && image[row][col-1] == flag){
+        dfs(image, row, col - 1, newColor, flag);
+    }
+    //右
+    if(col + 1 <= image[0].size() - 1 && image[row][col + 1] == flag){
+        dfs(image, row, col + 1, newColor, flag);
+    }
+} 
+```
 
-#### [79. 单词搜索（中等）](https://leetcode-cn.com/problems/word-search/)
 
 
+#### [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/) k
 
-### 岛屿问题
+这道题最开始想的是如何计算岛屿数量，其实后来想了一下就是双循环中如果=1就进入dfs， 那么=1必定会形成一个岛屿，就可以计数了
 
-#### [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+```c++
+int numIslands(vector<vector<char>>& grid) {
+    int row = grid.size();
+    int col = grid[0].size();
+    int count = 0;
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(grid[i][j] == '1'){
+                count++;
+                dfs(grid, i, j);
+            }  
+        }
+    }
+    return count;
+}
+void dfs(vector<vector<char>>& grid, int row, int col){
+    //切记！！遍历过得岛屿不能置为0！！会出错！
+    //grid[row][col] = '0';
+    grid[row][col] = '2';
+    //上
+    if(row - 1 >= 0 && grid[row-1][col] == '1'){
+        dfs(grid, row-1, col);
+    }
+    //下
+    if(row + 1 <= grid.size()-1 && grid[row+1][col] == '1'){
+        dfs(grid, row+1, col);
+    }
+    //左
+    if(col - 1 >= 0 && grid[row][col - 1] == '1'){
+        dfs(grid, row, col-1);
+    }
+    //右
+    if(col + 1 <= grid[0].size()-1 && grid[row][col + 1] == '1'){
+        dfs(grid, row, col+1);
+    }
+}
+```
 
-#### [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
+#### [417. 太平洋大西洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
+
+重要思路：将水的流向反转，假设太平洋和大西洋的水 从低向高 “攀登”，分别能到达哪些位置，分别用 p_visited 和 a_visited 表示。两者的交集就代表能同时流向太平洋和大西洋的位置。
+
+<img src="https://cdn.jsdelivr.net/gh/guaguaupup/cloudimg/data/image-20220614224944482.png" alt="image-20220614224944482" style="zoom: 50%; float:left" />
+
+```c++
+vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+    int row = heights.size();
+    int col = heights[0].size();
+    vector<vector<bool>> P(row, vector<bool>(col, false));
+    vector<vector<bool>> A(row, vector<bool>(col, false));
+    for(int i = 0; i < row; i++){
+        dfs(heights, P, i , 0);
+        dfs(heights, A, i,  col-1);
+    }
+    for(int j = 0; j < col; j++){
+        dfs(heights, P, 0, j);
+        dfs(heights, A, row-1, j);
+    }
+    vector<vector<int>> res;
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(P[i][j] == true && A[i][j] == true){
+                vector<int> tmp;
+                tmp.push_back(i);
+                tmp.push_back(j);
+                res.push_back(tmp);
+            }
+        }
+    }
+    return res;
+}
+
+void dfs(vector<vector<int>>& heights, vector<vector<bool>>& ocean, int row, int col){
+    if(ocean[row][col]){
+        return;
+    }
+    int m = ocean.size();
+    int n = ocean[0].size();
+    //上来就置为true是因为在边上的这些雨水自然而然能流到 所以就首先标记一下
+    ocean[row][col] = true;
+    //上
+    if(row >= 1 && heights[row][col] <= heights[row-1][col]){
+        dfs(heights, ocean, row - 1, col);
+    }
+    //下
+    if(row + 1 <= m - 1 && heights[row][col] <= heights[row+1][col]){ 
+        dfs(heights, ocean, row + 1, col);
+    }
+    //左
+    if(col >= 1 && heights[row][col] <= heights[row][col-1]){
+        dfs(heights, ocean, row, col-1);
+    }
+    //右
+    if(col +1 <= n - 1 && heights[row][col] <= heights[row][col+1]){
+        dfs(heights, ocean, row, col+1);
+    }
+}
+```
+
+
 
 #### [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)
 
+#### [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
+
 #### [1905. 统计子岛屿](https://leetcode-cn.com/problems/count-sub-islands/)
-
-#### [130. 被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
-
-#### [417. 太平洋大西洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
 
 ### 字符串中的回溯问题
 
@@ -6072,3 +6339,8 @@ int main(){
 
 
 
+# 剑指offer
+
+# leetcode热题100
+
+# 牛客热题100
