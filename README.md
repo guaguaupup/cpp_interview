@@ -31,7 +31,7 @@ TCP/IP协议栈是重点，一般面试官会问的比如：说一下TCP为什�
 ## [:memo:**数据结构算法**](https://github.com/guaguaupup/cplusplus_interview_summary/blob/main/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93%E2%80%94%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E7%AE%97%E6%B3%95.md)</br>
 不多说了，必背必备知识。
 
-## [:memo:**常考手撕代码**](https://github.com/guaguaupup/cpp_interview/blob/main/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93%E2%80%94%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81.md)</br>
+## [:memo:**常考代码**](https://github.com/guaguaupup/cplusplus_interview_summary/blob/main/%E6%AF%8F%E5%A4%A9%E4%B8%80%E7%9C%8B.md)</br>
 抽了一些会被经常问到的知识点的代码，经常会手撕，所以把这部分代码重新集合到一起看一些。我面试前就经常看，效果很好，基本都会问到而且很快都写出来了。
 
 ## [:memo:**逆天问题**](https://github.com/guaguaupup/cplusplus_interview_summary/blob/main/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93%E2%80%94%E7%A6%BB%E8%B0%B1%E9%97%AE%E9%A2%98.md)</br>
