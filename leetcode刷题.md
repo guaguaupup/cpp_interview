@@ -5064,19 +5064,19 @@ bool jarge(string s){
 
 ```c++
 vector<vector<int>> res;
-    vector<int> temp; 
-    vector<vector<int>> subsets(vector<int>& nums) {
-        back_tracing(nums, 0);
-        return res;
+vector<int> temp; 
+vector<vector<int>> subsets(vector<int>& nums) {
+    back_tracing(nums, 0);
+    return res;
+}
+void back_tracing(vector<int>& nums, int start){
+    res.push_back(temp);
+    for(int i = start; i < nums.size(); i++){
+        temp.push_back(nums[i]);
+        back_tracing(nums, i+1);
+        temp.pop_back();
     }
-    void back_tracing(vector<int>& nums, int start){
-        res.push_back(temp);
-        for(int i = start; i < nums.size(); i++){
-            temp.push_back(nums[i]);
-            back_tracing(nums, i+1);
-            temp.pop_back();
-        }
-    }
+}
 ```
 
 
@@ -5087,26 +5087,26 @@ vector<vector<int>> res;
 
 ```c++
 vector<vector<int>> res;
-    vector<int> temp;
-    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        vector<bool> use_check(nums.size(), false);
-        sort(nums.begin(), nums.end());
-        back_tracing(nums, 0, use_check);
-        return res;
-    }
-    void back_tracing(vector<int>& nums, int start, vector<bool>& use_check){
-        res.push_back(temp);
-        for(int i = start; i <nums.size(); i++ ){
-            if(i > 0 && nums[i] == nums[i-1] && use_check[i-1] == false){
-                continue;
-            }
-            temp.push_back(nums[i]);
-            use_check[i] = true;
-            back_tracing(nums, i+1, use_check);
-            temp.pop_back();
-            use_check[i] = false;
+vector<int> temp;
+vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+    vector<bool> use_check(nums.size(), false);
+    sort(nums.begin(), nums.end());
+    back_tracing(nums, 0, use_check);
+    return res;
+}
+void back_tracing(vector<int>& nums, int start, vector<bool>& use_check){
+    res.push_back(temp);
+    for(int i = start; i <nums.size(); i++ ){
+        if(i > 0 && nums[i] == nums[i-1] && use_check[i-1] == false){
+            continue;
         }
+        temp.push_back(nums[i]);
+        use_check[i] = true;
+        back_tracing(nums, i+1, use_check);
+        temp.pop_back();
+        use_check[i] = false;
     }
+}
 ```
 
 - 总结
@@ -5373,13 +5373,236 @@ int get_mine(vector<vector<char>>& board, int x, int y){
 }
 ```
 
-
-
 #### [488. 祖玛游戏](https://leetcode-cn.com/problems/zuma-game/)
 
 挺难的，没时间写了
 
+
+
+### 字符串中的回溯问题
+
+#### [17. 电话号码的字母组合（中等）](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)K
+
+```c++
+vector<string> res;
+string tmp;
+vector<string> letterCombinations(string digits) {
+    unordered_map<char, string> m_map{
+        {'1', ""},
+        {'2', "abc"},
+        {'3', "def"},
+        {'4', "ghi"},
+        {'5', "jkl"},
+        {'6', "mno"},
+        {'7', "pqrs"},
+        {'8', "tuv"},
+        {'9', "wxyz"}
+    };
+    if(digits.size() == 0){
+        return res;
+    }
+    back_tracing(m_map, digits, 0);
+    return res;
+}
+void back_tracing(unordered_map<char, string>& m_map, string digits, int index){
+    if(index == digits.size()){
+        res.push_back(tmp);
+        return;
+    }
+    string tel_str = m_map[digits[index]];
+    for(int i = 0; i < tel_str.size(); i++ ){
+        tmp += tel_str[i];
+        back_tracing(m_map, digits, index+1);
+        tmp.pop_back();
+    }
+}
+```
+
+
+
+#### [784. 字母大小写全排列（中等）](https://leetcode-cn.com/problems/letter-case-permutation/)
+
+这个题其实和之前有一点区别，即不用考虑if了，直接全部加进去，在每个string上面修改
+
+```c++
+vector<string> res;
+vector<string> letterCasePermutation(string s) {
+    dfs(s, 0);
+    return res;
+}
+void dfs(string s, int index){
+    res.push_back(s);
+    for(int i = index; i < s.size(); i++){
+        //这个回溯的重点不是pop_back了，而是大小写切回去     
+        if(is_digital(s[i])){
+            continue;
+        }
+        change(s[i]);
+        dfs(s, i+1);
+        change(s[i]);
+    }
+}
+
+bool is_digital(char c){
+    if(c >= '0' && c <= '9'){
+        return true;
+    }
+    return false;
+}
+
+void change(char& c){
+    if(c >= 'a' && c <= 'z'){
+        c = (char)(c - 32);
+    }
+    else if(c >= 'A' && c <= 'Z'){
+        c = (char)(c + 32);
+    }
+}
+```
+
+
+
+
+
+#### [22. 括号生成（中等）](https://leetcode-cn.com/problems/generate-parentheses/) k
+
+这道题广度优先遍历也很好写，可以通过这个问题理解一下为什么回溯算法都是深度优先遍历，并且都用递归来写。
+
+**如果左括号数量不大于 n*n*，我们可以放一个左括号。如果右括号数量小于左括号的数量，我们可以放一个右括号。对，就是这样的**
+
+```c++
+vector<string> res;
+string tmp;
+vector<string> generateParenthesis(int n) {
+    dfs(n, 0, 0);
+    return res;
+}
+void dfs(int n, int left, int right){
+    if(tmp.size() == 2*n){
+        res.push_back(tmp);
+        return;
+    }
+    if(left < n){
+        tmp += '(';
+        dfs(n, left+1, right);
+        tmp.pop_back();
+    }
+    if(right < left){
+        tmp += ')';
+        dfs(n, left, right+1);
+        tmp.pop_back();
+    }
+}
+```
+
+
+
 ### Flood Fill
+
+#### [529. 扫雷游戏](https://leetcode-cn.com/problems/minesweeper/)K
+
+需要再写一遍，阿里笔试出现过，第一次写不太会，要多看看
+
+> 这道题的意思是就点击一次，然后看看点击一次后棋盘是什么样子的。
+>
+> 为啥会用dfs呢，因为当你挖出的不是雷后，要判断挖出的这个地方周围是否有雷，如果挖出的这个地方的四周(上下左右对角八个方向)有，则显示对应的地雷数目，如果是0则，就需要将该块改成B，并递归的处理其周围的八个块，所以需要用递归哦，这个是重点
+
+```c++
+vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+    int x = click[0];
+    int y = click[1];
+    dfs(board, x, y);
+    return board;
+}
+void dfs(vector<vector<char>>& board, int x, int y){
+    //表示点击到了一个地雷
+    if(board[x][y] == 'M'){
+        board[x][y] = 'X';
+        return;
+    }
+
+    //如果不是地雷，判断挖开的地方周围有几个地雷
+    int mine_num = get_mine(board, x, y);
+    //挖开的这个块周边有地雷，则显示地雷数
+    if(mine_num > 0){
+        board[x][y] = mine_num + '0';
+    }
+    //周围都没有地雷，需要把该块周围的八个块都遍历一遍
+    else if(mine_num == 0){
+        board[x][y] = 'B';
+        //上
+        if((x-1) >=0 && board[x-1][y] == 'E'){
+            dfs(board, x-1, y);
+        }
+        //下
+        if((x+1) <= board.size() - 1 && board[x+1][y] == 'E'){
+            dfs(board, x+1, y);
+        }
+        //左
+        if((y-1) >= 0 && board[x][y-1] == 'E'){
+            dfs(board, x, y-1);
+        }
+        //右
+        if((y+1) <= board[0].size() - 1 && board[x][y+1] == 'E'){
+            dfs(board, x, y+1);
+        }
+        //左上
+        if((x-1) >= 0 && (y-1) >= 0 && board[x-1][y-1] == 'E'){
+            dfs(board, x-1, y-1);
+        }
+        //左下
+        if((x+1) <= board.size() - 1 && (y-1) >= 0 && board[x+1][y-1] == 'E'){
+            dfs(board, x+1, y-1);
+        }
+        //右上
+        if((x-1) >= 0 && (y+1) <= board[0].size() - 1 && board[x-1][y+1] == 'E'){
+            dfs(board, x-1, y+1);
+        }
+        //右下
+        if((x+1) <= board.size() - 1 && (y+1) <= board[0].size() - 1 && board[x+1][y+1] == 'E'){
+            dfs(board, x+1, y+1);
+        }
+    }
+
+}
+
+int get_mine(vector<vector<char>>& board, int x, int y){
+    int count = 0;
+    //上
+    if((x-1) >=0 && board[x-1][y] == 'M'){
+        count++;
+    }
+    //下
+    if((x+1) <= board.size() - 1 && board[x+1][y] == 'M'){
+        count++;
+    }
+    //左
+    if((y-1) >= 0 && board[x][y-1] == 'M'){
+        count++;
+    }
+    //右
+    if((y+1) <= board[0].size() - 1 && board[x][y+1] == 'M'){
+        count++;
+    }
+    //左上
+    if((x-1) >= 0 && (y-1) >= 0 && board[x-1][y-1] == 'M'){
+        count++;
+    }
+    //左下
+    if((x+1) <= board.size() - 1 && (y-1) >= 0 && board[x+1][y-1] == 'M'){
+        count++;
+    }
+    //右上
+    if((x-1) >= 0 && (y+1) <= board[0].size() - 1 && board[x-1][y+1] == 'M'){
+        count++;
+    }
+    //右下
+    if((x+1) <= board.size() - 1 && (y+1) <= board[0].size() - 1 && board[x+1][y+1] == 'M'){
+        count++;
+    }
+    return count;
+}
+```
 
 #### [79. 单词搜索（中等）](https://leetcode-cn.com/problems/word-search/)K
 
@@ -5664,21 +5887,201 @@ void dfs(vector<vector<int>>& heights, vector<vector<bool>>& ocean, int row, int
 
 
 
-#### [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)
+#### [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/) k
+
+这道题比较重要，做这道题的时候发现了dfs可能重复遍历的问题
+
+最开始出现问题一直没找到，代码如下：
+
+```c++
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int row = grid.size() ;
+        int col = grid[0].size();
+        int max_area = 0;
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                cout<<i<<j<<endl;
+                dfs(grid, i, j, max_area, 0);
+            }
+        }
+        return max_area;
+    }
+    void dfs(vector<vector<int>>& grid, int row, int col, int& max_area, int tmp_area){
+        if(grid[row][col] == 0){
+            return;
+        }
+        if(tmp_area >= max_area){
+            max_area = tmp_area;
+        }
+        //up
+        if(row - 1 >= 0 && grid[row - 1][col] == 1){
+            dfs(grid, row - 1, col, max_area, tmp_area + 1);
+        }
+        //down
+        if(row + 1 <= grid.size() - 1 && grid[row + 1][col] == 1){
+            dfs(grid, row + 1, col, max_area, tmp_area + 1);
+        }
+        //left
+        if(col - 1 >= 0 && grid[row][col - 1] == 1){
+            dfs(grid, row, col - 1, max_area, tmp_area + 1);
+        }
+        //right
+        if(col + 1 <= grid[0].size() - 1 && grid[row][col + 1] == 1){
+            dfs(grid, row, col + 1, max_area, tmp_area + 1);
+        }
+    }
+};
+```
+
+做了这么多道题了，才发现这个问题，就是没有标记，结果他一直会循环的dfs，走过的地方会重新走
+
+借助这一道题，以后这种的要注意了，遍历过后一定要把遍历的值改变
+
+比如这里面，遍历过得岛屿置为0就好
+
+```c++
+int maxAreaOfIsland(vector<vector<int>>& grid) {
+    int row = grid.size() ;
+    int col = grid[0].size();
+    int max_area = 0;
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(grid[i][j] == 1){
+                max_area = max(dfs(grid, i, j), max_area);
+            }
+
+        }
+    }
+    return max_area;
+}
+int dfs(vector<vector<int>>& grid, int row, int col){
+    grid[row][col] = 0;
+    int count = 1;
+    //up
+    if(row - 1 >= 0 && grid[row - 1][col] == 1){
+        count += dfs(grid, row - 1, col);
+    }
+    //down
+    if(row + 1 <= grid.size() - 1 && grid[row + 1][col] == 1){
+        count += dfs(grid, row + 1, col);
+    }
+    //left
+    if(col - 1 >= 0 && grid[row][col - 1] == 1){
+        count += dfs(grid, row, col - 1);
+    }
+    //right
+    if(col + 1 <= grid[0].size() - 1 && grid[row][col + 1] == 1){
+        count += dfs(grid, row, col + 1);
+    }
+    return count;
+}
+```
 
 #### [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
 
+难点：如何判断封闭岛屿？其实可以这样想，只要是不封闭的岛屿，必然回合外边界有接触，我们可以这样子去判断
+
+所以代码中表现出来即当岛屿在边界的时候0, row, 0, col时候返回false
+
+```c++
+int closedIsland(vector<vector<int>>& grid) {
+    int row = grid.size();
+    int col = grid[0].size();
+    int count = 0;
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(grid[i][j] == 0){
+                if(dfs(grid, i , j)){
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+bool dfs(vector<vector<int>>& grid, int row, int col){
+    int m = grid.size();
+    int n = grid[0].size();
+    //判断是否在边界
+    if(row < 0 || row >= m || col  < 0 || col >= n ){
+        return false;
+    }
+    //考虑一个0被9个1包围的情况，当碰到一时返回true
+    if(grid[row][col] == 1){
+        return true;
+    }
+    //走过的路置为1防止重复
+    grid[row][col] = 1;
+    //dfs,不用担心越界的问题，因为越界了直接返回false了
+    bool up = dfs(grid, row-1, col);
+    bool down = dfs(grid, row + 1, col);
+    bool left = dfs(grid, row, col - 1);
+    bool right = dfs(grid, row, col + 1);
+    return up && down && left && right;
+}
+```
+
 #### [1905. 统计子岛屿](https://leetcode-cn.com/problems/count-sub-islands/)
 
-### 字符串中的回溯问题
+本质上就是计算岛屿的数量，grid2中的每个岛屿如果都在grid1中，就可以++
 
-#### [17. 电话号码的字母组合（中等）](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)，[题解](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/solution/hui-su-sou-suo-wu-xian-shi-hui-su-yan-du-you-xian-/)；
+所以当`grid1[row][col] == 0`表明grid2就不是gird1的子岛屿
 
-#### [784. 字母大小写全排列（中等）](https://leetcode-cn.com/problems/letter-case-permutation/)；
+```c++
+int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+    int row = grid2.size();
+    int col = grid2[0].size();
+    int count = 0;
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            if(grid2[i][j] == 1){
+                bool flag = true;
+                dfs(grid1, grid2, i, j, flag);
+                if(flag){
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}
+void dfs(vector<vector<int>>& grid1, vector<vector<int>>& grid2, int row, int col, bool& flag){
+    if(grid2[row][col] == 0){
+        return;
+    }
+    //表明grid2中的岛屿不在grid1中
+    if(grid1[row][col] == 0){
+        flag = false;
+    }
+    //遍历过得要改掉
+    grid2[row][col] = 0;
+    //up
+    if(row - 1 >= 0 && grid2[row-1][col] == 1){
+        dfs(grid1, grid2, row-1, col, flag);
+    }
+    // down
+    if(row + 1 <= grid2.size() - 1 && grid2[row+1][col] == 1){
+        dfs(grid1, grid2, row+1, col, flag);
+    }
+    // left
+    if(col - 1 >= 0 && grid2[row][col-1] == 1){
+        dfs(grid1, grid2, row, col-1, flag);
+    }
+    // right
+    if(col + 1 <= grid2[0].size() - 1 && grid2[row][col + 1] == 1){
+        dfs(grid1, grid2, row, col+1, flag);
+    }
+}
+```
 
-#### [22. 括号生成（中等）](https://leetcode-cn.com/problems/generate-parentheses/) 
 
-这道题广度优先遍历也很好写，可以通过这个问题理解一下为什么回溯算法都是深度优先遍历，并且都用递归来写。
+
+
+
+
 
 
 
@@ -5831,13 +6234,27 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 
 
 
+### [33. Search in Rotated Sorted Array](https://leetcode.cn/problems/search-in-rotated-sorted-array/)
+
+### [81. Search in Rotated Sorted Array II](https://leetcode.cn/problems/search-in-rotated-sorted-array-ii/)
+
+### [162. Find Peak Element](https://leetcode.cn/problems/find-peak-element/)
+
+### [209. Minimum Size Subarray Sum](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+
+### [222. Count Complete Tree Nodes](https://leetcode.cn/problems/count-complete-tree-nodes/)
+
+### [475. Heaters](https://leetcode.cn/problems/heaters/)
+
+
+
 
 
 +++
 
 
 
-## 快慢指针
+## 双指针
 
 ### [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/)
 
@@ -5851,9 +6268,9 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 
   快慢指针解决掉它
 
-  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/202202241511888.jpeg" alt="WechatIMG734.jpeg" style="zoom: 33%;" />
+  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/202202241511888.jpeg" alt="WechatIMG734.jpeg" style="zoom: 33%;float:left" />
 
-  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/202202241511346.jpeg" alt="WechatIMG735.jpeg" style="zoom:33%;" />
+  <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/202202241511346.jpeg" alt="WechatIMG735.jpeg" style="zoom:33%;float:left" />
 
   
 
@@ -5892,9 +6309,21 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 
   
 
+### [148. Sort List](https://leetcode.cn/problems/sort-list/)
 
+### [143. Reorder List](https://leetcode.cn/problems/reorder-list/)
 
+### [86. Partition List](https://leetcode.cn/problems/partition-list/)
 
+### [80. Remove Duplicates from Sorted Array II](https://leetcode.cn/problems/remove-duplicates-from-sorted-array-ii/)
+
+### [11. Container With Most Water](https://leetcode.cn/problems/container-with-most-water/)
+
+### [611. Valid Triangle Number](https://leetcode.cn/problems/valid-triangle-number/)
+
+### [838. Push Dominoes](https://leetcode.cn/problems/push-dominoes/)
+
+### [165. Compare Version Numbers](https://leetcode.cn/problems/compare-version-numbers/)
 
 
 
