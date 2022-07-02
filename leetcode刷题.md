@@ -81,6 +81,30 @@ int   atoi( const char *str );
 
 
 
+## min和max
+
+包含在c++标准库中头文件`<algorithm>`中
+
+```c++
+std::min(const T& a, const T& b);
+std::max(const T& a, const T& b);
+//或者自己写comp函数
+const T& min (const T& a, const T& b, Compare comp);
+
+//自定义compare函数如下
+static bool compare(const string& s1, const string& s2)
+{
+    string ab = s1 + s2;
+    string ba = s2 + s1;
+    return ab < ba; //升序排列。如改为ab > ba, 则为降序排列
+}
+ 
+```
+
+
+
+
+
 
 
 # 数据结构
@@ -1490,6 +1514,38 @@ public:
 };
 ```
 
+#### [222. Count Complete Tree Nodes](https://leetcode.cn/problems/count-complete-tree-nodes/)
+
+这个题就是完全二叉树的性质，给一个二叉树，然后判断有几个节点，下图很能说明情况：
+
+<img src="https://s2.loli.net/2022/07/02/OPbd9LInaW2ql4s.png" alt="222.完全二叉树的节点个数" style="zoom: 67%; float: left;" />
+
+如果是满二叉树，直接就是$2^n-1$，如果不是满二叉树，那么就往下递归呗
+
+```c++
+int countNodes(TreeNode* root) {
+    if(!root){
+        return 0;
+    }
+    int left_height = 0;
+    int right_height = 0;
+    TreeNode* left_node = root->left;
+    TreeNode* right_node = root->right;
+    while(left_node){
+        left_node = left_node->left;
+        left_height++;
+    }
+    while(right_node){
+        right_node = right_node->right;
+        right_height++;
+    }
+    if(left_height == right_height){
+        return (2<<left_height) - 1;
+    }
+    return countNodes(root->left) + countNodes(root->right) + 1; //1是根节点
+}
+```
+
 
 
 ### 二叉搜索树BST
@@ -2407,7 +2463,7 @@ int numTrees(int n) {
 } 
 ```
 
-#### :o:[377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv/)、
+#### [377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv/) k
 
 排列组合问题，这道题还可以这样翻译：
 
@@ -2434,6 +2490,16 @@ int combinationSum4(vector<int>& nums, int target) {
 - 易错点
 
   主要在于数组越界问题，这道题很巧妙，可以参考一下。
+
+
+
+#### [64. Minimum Path Sum](https://leetcode.cn/problems/minimum-path-sum/)
+
+
+
++++
+
+
 
 ### 背包问题
 
@@ -5127,7 +5193,7 @@ void back_tracing(vector<int>& nums, int start, vector<bool>& use_check){
 
      不加use_check数组的话，对于同一层元素，如果有重复我们就是不能用它，如下图：
 
-     <img src="https://cdn.jsdelivr.net/gh/luogou/cloudimg/data/20210818134850.webp" alt="图片" style="zoom: 67%; float: left;" />
+     <img src="https://s2.loli.net/2022/07/02/YFRVWpXcPklhd83.webp" alt="图片" style="zoom: 67%; float: left;" />
 
      对于同一树枝来说，第三层得自己[1 ,2]，第四层的[1, 2, 2]如果不加use_check数组，肯定得不到122这个数组,当if判断的时候就跳过了，但我们还要用到2，所以上述代码不合适。
 
@@ -6238,7 +6304,7 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 
 
 
-### [33. Search in Rotated Sorted Array](https://leetcode.cn/problems/search-in-rotated-sorted-array/) k
+### [33. Search in Rotated Sorted Array](https://leetcode.cn/problems/search-in-rotated-sorted-array/) k
 
 这道题的意思就是在数组中查找target
 
@@ -6277,7 +6343,7 @@ int search(vector<int>& nums, int target) {
 }
 ```
 
-### [81. Search in Rotated Sorted Array II](https://leetcode.cn/problems/search-in-rotated-sorted-array-ii/) k
+### [81. Search in Rotated Sorted Array II](https://leetcode.cn/problems/search-in-rotated-sorted-array-ii/) k
 
 这道题和33相比呢，有个条件变了，数组有重复的值
 
@@ -6323,13 +6389,73 @@ bool search(vector<int>& nums, int target) {
 
 
 
-### [162. Find Peak Element](https://leetcode.cn/problems/find-peak-element/)
+### [162. Find Peak Element](https://leetcode.cn/problems/find-peak-element/) k
 
-### [209. Minimum Size Subarray Sum](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+首先要注意题目条件，在题目描述中出现了 nums[-1] = nums[n] = -∞，这就代表着 只要数组中存在一个元素比相邻元素大，那么沿着它一定可以找到一个峰值
 
-### [222. Count Complete Tree Nodes](https://leetcode.cn/problems/count-complete-tree-nodes/)
+注意，这道题为什么二分的方向只能是往上爬而不是往下降呢？
 
-### [475. Heaters](https://leetcode.cn/problems/heaters/)
+因为可以想象成爬山（没错，就是带你去爬山），如果你往下坡方向走，也许可能遇到新的山峰，但是也许是一个一直下降的坡，最后到边界。但是如果你往上坡方向走，就算最后一直上的边界，由于最边界是负无穷，所以就一定能找到山峰，总的一句话，往递增的方向上，二分，一定能找到，往递减的方向只是可能找到，也许没有。
+
+两个问题：①为什么是r<l ②为什么是r=mid，这两个问题看例子[1]和[1,2,1,3,5,6,4]
+
+```c++
+int findPeakElement(vector<int>& nums) {
+    int l = 0;
+    int r = nums.size() - 1;
+    //注意 不能是l<=r了，要是l<r
+    while(l < r){
+        int mid = l + (r-l)/2;
+        cout<<mid<<endl;
+        //往上走，mid的右边一定有元素，可以思考一下为什么
+        if(nums[mid] <= nums[mid + 1]){
+            l = mid + 1;
+        }else{
+            r = mid;
+        }
+    }
+    return l;
+}
+```
+
+
+
+### [209. Minimum Size Subarray Sum ](https://leetcode.cn/problems/minimum-size-subarray-sum/)  k
+
+前缀和，用一个数组存前缀和，由于是positive integers nums，所以前缀和这个数组肯定是递增的，所以这个数组可以用来做 二分 
+
+时间复杂度是$nlogn$
+
+具体：我们得出了前缀和数组pre_sum，pre_sum[i]表示num[0]-num[i-1]的和
+
+可以想一下，我们有这个前缀和如何找和目标target相关的值呢？我们是需要看前缀和数组中哪两个数相减等于target的，举个例子：
+
+数组[2,3,1,2,4,3]的前缀和为pre_sum[0,2,5,6,8,12,15]，target为7，那么我们想找**contiguous subarray=7**的话就是相减，比如12-5,15-8这样
+
+那么反过来我们计算机的思维就是用target+每一个pre_num[i]，看在数组中能不能找到，找到了获得索引，就能知道子数组相加等于target的长度是多少
+
+ ```c++
+ int minSubArrayLen(int target, vector<int>& nums) {
+     int res = INT_MAX;
+     int n = nums.size();
+     vector<int> pre_sum(n+1, 0);
+     //前缀和
+     for(int i = 1; i < n + 1; i++){
+         pre_sum[i] = pre_sum[i-1] + nums[i-1];
+     }
+     //二分，用lower_bound
+     //一次遍历每个pre_sum
+     for(int i = 0; i < n+1; i++){
+         int tmp = target + pre_sum[i];
+         auto index = lower_bound(pre_sum.begin(), pre_sum.end(), tmp);
+         if(index != pre_sum.end()){
+             res = min(res, (int)((index-pre_sum.begin())-i));
+         }
+     }
+     //可能没有等于target的
+     return res == INT_MAX ? 0 : res; 
+ }
+ ```
 
 
 
@@ -6339,7 +6465,7 @@ bool search(vector<int>& nums, int target) {
 
 
 
-## 双指针
+## 双指针（或滑动窗口）
 
 ### [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/)
 
@@ -6410,9 +6536,7 @@ bool search(vector<int>& nums, int target) {
 
 ### [165. Compare Version Numbers](https://leetcode.cn/problems/compare-version-numbers/)
 
-
-
-
+### [209. Minimum Size Subarray Sum ](https://leetcode.cn/problems/minimum-size-subarray-sum/)  k
 
 
 
