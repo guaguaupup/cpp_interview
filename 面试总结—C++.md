@@ -1675,6 +1675,134 @@ void f(T... args);
 
 互斥对象的使用，保证了同一时刻只有唯一的一个线程对这个共享进行访问，从执行的结果来看，互斥对象保证了结果的正确性，但是也有非常大的性能损失
 
+### C++11的std::function和std::bind
+
+> C++11的std::function和std::bind作用的对象叫做可调用对象，先解释一下什么是可调用对象c++中有几种可调用对象，比如函数、函数指针、lambda表达式、bind对象、函数对象。
+>
+> **函数：**这个刚学编程的时候大家都知道了，所以说这就不说了
+>
+> **函数指针：**函数指针就是指向函数的指针，把函数当做变量来处理，大部分用作回调函数
+>
+> **lambda表达式：**（匿名函数对象，一个C++的语法糖）　一个lambda表达式表示一个可调用的代码单元，我们可以将其理解为有一个未命名的内联函数，与任何函数类似，一个lambda具有一个返回类型，一个参数列表和一个函数体，并且这个函数体是可以定义在其他函数内部的。
+>
+> **重载了函数调用符的类：**C++的类厉害的地方之一就是可以重载函数运算，就是retType operator( )(parameter...){ }的形式，这种重载了函数调用符的类可以直接让我们用类名来实现函数的功能，比如：
+>
+> ```c++
+> class FunctonalClass
+> {
+> public:
+>     bool operator()(const int &a, const int &value)
+>     {
+>         return a >= value;
+>     }
+> };
+> ```
+>
+> 调用运算符就是`()`，重载了调用运算符的类就叫做函数对象，在泛型编程中大量使用函数对象作为实参，比如头文件functiona中定义了算术运算符，关系运算符，逻辑运算符的模板类作为函数对象来调用，比如greater源码如下：
+>
+> ```c++
+> template <class T>
+> struct greater
+> {
+>     bool operator()(const T& x, const T& y) const{return x > y;}
+> };
+> ```
+>
+> **std::bind：**用来生产一个可调用对象来适应原对象的参数列表。
+
+**std::function**
+
+从上面看由于可调用对象的定义方式比较多，但是函数的调用方式比较类似，因此我们可以使用一个统一的方式保存可调用对象或者传递可调用对象，因此就有了std::function。
+
+std::function是一个可调用对象包装器，是一个类模板，可以容纳除了类成员函数指针之外的所有可调用对象，它可以用统一的方式处理函数、函数对象、函数指针，lambda表达式并允许保存和延迟它们的执行。下面是代码示例：
+
+```c++
+typedef std::function<int(int, int)> comfun;
+// 普通函数
+int add(int a, int b) { return a + b; }
+// lambda表达式
+auto mod = [](int a, int b){ return a % b; };
+// 函数对象类
+struct divide{
+    int operator()(int denominator, int divisor){
+        return denominator/divisor;
+    }
+};
+
+int main(){
+	comfun a = add;
+	comfun b = mod;
+	comfun c = divide();
+    std::cout << a(5, 3) << std::endl;
+    std::cout << b(5, 3) << std::endl;
+    std::cout << c(5, 3) << std::endl;
+}
+```
+
+总结：std::function对C++中各种可调用实体(普通函数、Lambda表达式、函数指针、以及其它函数对象等)的封装，形成一个新的可调用的std::function对象，简化调用。std::function对象是对C++中现有的可调用实体的一种类型安全的包裹(如：函数指针这类可调用实体，是类型不安全的)。
+
+**std::bind**
+
+std::bind可以看作一个通用的函数适配器，它接受一个可调用对象，生成一个新的可调用对象来适应原对象的参数列表。std::bind将可调用对象与其参数一起进行绑定，绑定后的结果可以使用std::function保存。std::bind主要有以下两个作用：
+
+1. 将可调用对象和其参数绑定成一个仿函数；
+2. 只绑定部分参数，减少可调用对象传入的参数。
+
+bind的调用形式如下：
+
+```c++
+auto newCallable = bind(callable, arg_list);
+```
+
+该形式表达的意思是：当调用`newCallable`时，会调用`callable`，并传给它`arg_list`中的参数。需要注意的是：arg_list中的参数可能包含形如`_n`的名字。其中n是一个整数，这些参数是占位符，表示newCallable的第n个参数，它们占据了传递给newCallable的参数的位置。数值n表示生成的可调用对象中参数的位置：`_1`为newCallable的第一个参数，`_2`为第二个参数，以此类推。
+
+```c++
+//表示绑定函数 fun 的第一，二，三个参数值为： 1 2 3
+std::function<void(int, int, int)> f1 = std::bind(fun_1, 1, 2, 3); 					
+f1(); 	//print: x=1,y=2,z=3
+
+//表示绑定函数 fun 的第三个参数为 3，而fun 的第一，二个参数分别由调用 f2 的第一，二个参数指定
+std::function<void(int, int, int)> f2 = std::bind(fun_1, std::placeholders::_1, std::placeholders::_2, 3);
+f2(1, 2);		//print: x=1,y=2,z=3
+
+//表示绑定函数 fun 的第三个参数为 3，而fun 的第一，二个参数分别由调用 f3 的第二，一个参数指定
+std::function<void(int, int, int)> f3 = std::bind(fun_1, std::placeholders::_2, std::placeholders::_1, 3);
+//注意： f2  和  f3 的区别。
+f3(1, 2);		//print: x=2,y=1,z=3
+```
+
+从上可以看到，std::bind的返回值是可调用实体，可以直接赋给std::function。
+
+### lambda表达式
+
+### c++11关键字
+
+#### noexcept
+
+noexcept告诉编译器指定某个函数不抛异常
+
+C++中的异常处理是在运行时而不是编译时检测的。为了实现运行时检测，编译器创建额外的代码，然而这会妨碍程序优化。
+
+一个操作或者函数不可能抛出任何异常，在以往的C++版本中常用throw()表示，在C++ 11中已经被noexcept代替。
+
+> 成员函数声明后面跟上throw()，表示告诉类的使用者：我的这个方法不会抛出异常，所以，在使用该方法的时候，不必把它至于 try/catch 异常处理块中。
+
+```c++
+void swap(Type& x, Type& y) throw()   //C++11之前
+{
+    x.swap(y);
+}
+void swap(Type& x, Type& y) noexcept  //C++11
+{
+    x.swap(y);
+}
+
+```
+
+#### override
+
+告诉编译器要重写父类的方法（函数参数、返回类型必须相同）
+
 
 
 
