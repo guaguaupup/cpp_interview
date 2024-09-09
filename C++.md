@@ -620,7 +620,7 @@ const PINT p2 = &i2;	//p可以更改，p指向的内容不能更改，相当于 
 
 
 
-## #define<>和#define“ ”的区别
+## #include<>和#include“ ”的区别
 
 **#include<>**
 
@@ -1846,7 +1846,7 @@ public:
 
 
 
-## 怎么在栈上栈上分配内存？
+## 怎么在栈上分配内存？
 
 alloca函数
 
