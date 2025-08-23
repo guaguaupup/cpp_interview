@@ -394,9 +394,9 @@ int main()
 {
 	int b = 5;
 	{	
-        //g++编译报错
+        //gcc编译报错
 	 	static int c = b;
-        //gcc编译不报错
+        //g++编译不报错
         static int c = b;	
 	}
 	return 0;
